@@ -2,7 +2,7 @@ import React, { createContext, useContext, ReactNode } from "react";
 import { Driver } from "../types";
 
 import {
-  JazziContextProps,
+  JoazcoContextProps,
   useConfig,
   useLanguages,
   useConnection,
@@ -22,14 +22,14 @@ export function createCtx<ContextType>() {
   return [useCtx, ctx.Provider] as const;
 }
 
-const [useJazzi, CtxProvider] = createCtx<JazziContextProps>();
+const [useJoazco, CtxProvider] = createCtx<JoazcoContextProps>();
 
-type JazziProviderProps = {
+type JoazcoProviderProps = {
   driver: Partial<Driver>;
   children: ReactNode;
 };
 
-const JazziProvider = ({ driver, children }: JazziProviderProps) => {
+const JoazcoProvider = ({ driver, children }: JoazcoProviderProps) => {
   const useConfigRest = useConfig();
   const useLanguagesRest = useLanguages();
   const { logged, getCurrentUser, ...useConnectionRest } = useConnection(
@@ -72,5 +72,5 @@ const JazziProvider = ({ driver, children }: JazziProviderProps) => {
   );
 };
 
-export { useJazzi };
-export default JazziProvider;
+export { useJoazco };
+export default JoazcoProvider;

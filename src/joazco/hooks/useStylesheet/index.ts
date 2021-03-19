@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from "react";
 import { Driver } from "../../../types";
 
-const jazziError = "Joazco::: Stylesheet service error";
+const joazcoError = "Joazco::: Stylesheet service error";
 
 export type UseStylesheetRest = {
   loadingStylesheet: boolean | null;
@@ -28,7 +28,7 @@ const useStylesheet = (driver: Partial<Driver>): UseStylesheetRest => {
       new Promise((resolve, reject) => {
         const { insertStylesheet: insertStylesheetDriver } = driver;
         if (!insertStylesheetDriver) {
-          reject(new Error(jazziError));
+          reject(new Error(joazcoError));
           return;
         }
         setLoadingStylesheet(true);
@@ -48,7 +48,7 @@ const useStylesheet = (driver: Partial<Driver>): UseStylesheetRest => {
       new Promise((resolve, reject) => {
         const { insertStylesheet: insertStylesheetDriver } = driver;
         if (!insertStylesheetDriver) {
-          reject(new Error(jazziError));
+          reject(new Error(joazcoError));
           return;
         }
         setLoadingStylesheet(true);
@@ -68,7 +68,7 @@ const useStylesheet = (driver: Partial<Driver>): UseStylesheetRest => {
       new Promise((resolve, reject) => {
         const { getStylesheet: getStylesheetDriver } = driver;
         if (!getStylesheetDriver) {
-          reject(new Error(jazziError));
+          reject(new Error(joazcoError));
           return;
         }
         setLoadingStylesheet(true);

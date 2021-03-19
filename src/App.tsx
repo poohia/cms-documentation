@@ -1,10 +1,10 @@
 import React, { Suspense, lazy } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import { useJazzi } from "./joazco";
+import { useJoazco } from "./joazco";
 import { SuspenseContent } from "./styles";
 
-const template: string = process.env.REACT_APP_JAZZI_TEMPLATE || "default";
+const template: string = process.env.REACT_APP_JOAZCO_TEMPLATE || "default";
 
 const Connection = lazy(() => import("./admin/Connection"));
 const HomeAdmin = lazy(() => import("./admin/Seo"));
@@ -23,12 +23,13 @@ function App() {
   const {
     icon,
     enableFixtures,
+    locale,
     seo: { title, description, keywords, favIcon },
     stylesheet,
-  } = useJazzi();
+  } = useJoazco();
   return (
     <>
-      <Helmet>
+      <Helmet htmlAttributes={{ lang: locale }}>
         <meta charSet="utf-8" />
         <title>{title}</title>
         <base href="/" />
@@ -38,6 +39,7 @@ function App() {
         <meta property="al:android:app_name" content={title} />
         <meta property="og:type" content="website" />
         <meta property="og:description" content={description} />
+        <meta property="og:locale" content={locale} />
         <meta name="description" content={description} />
         <meta name="keywords" content={keywords} />
         <link rel="icon" href={icon} />

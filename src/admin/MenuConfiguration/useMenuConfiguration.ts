@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import { useJazzi } from "../../joazco";
+import { useJoazco } from "../../joazco";
 import { Menu } from "../../types";
 
 const useMenuConfiguration = (menu?: Menu) => {
@@ -15,7 +15,7 @@ const useMenuConfiguration = (menu?: Menu) => {
     removeMenu,
     removePageFromMenu,
     addPageFromMenu,
-  } = useJazzi();
+  } = useJoazco();
   const [menuTitle, setMenuTitle] = useState<string>(menu ? menu.title : "");
   const [menuCaption, setMenuCaption] = useState<string>(
     menu ? menu.caption || "" : ""

@@ -1,12 +1,12 @@
 import { useState, useCallback } from "react";
-import { useJazzi } from "../../joazco";
+import { useJoazco } from "../../joazco";
 
 const usePages = () => {
   const [openModalCreate, setOpenCreateModal] = useState<boolean>(false);
   const [filter, setFilter] = useState<string>("");
   const [title, setTitle] = useState<string>("");
   const [slug, setSlug] = useState<string>("");
-  const { logged, pages, loadingPages, createPage, removePage } = useJazzi();
+  const { logged, pages, loadingPages, createPage, removePage } = useJoazco();
 
   const createSlug = useCallback((text: string): string => {
     let finalText = text;

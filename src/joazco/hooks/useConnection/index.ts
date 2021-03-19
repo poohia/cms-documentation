@@ -1,7 +1,7 @@
 import { useState, useCallback } from "react";
 import { Driver, User } from "../../../types";
 
-const jazziError = "Joazco::: Connection service error";
+const joazcoError = "Joazco::: Connection service error";
 
 export type UseConnectionRest = {
   logged: boolean | null;
@@ -22,7 +22,7 @@ const useConnection = (driver: Partial<Driver>): UseConnectionRest => {
       new Promise((resolve, reject) => {
         const { onceCheckLogged } = driver;
         if (!onceCheckLogged) {
-          reject(new Error(jazziError));
+          reject(new Error(joazcoError));
           return;
         }
         onceCheckLogged()
@@ -44,7 +44,7 @@ const useConnection = (driver: Partial<Driver>): UseConnectionRest => {
 
       setLoadingSignIn(true);
       if (!signInDriver) {
-        reject(new Error(jazziError));
+        reject(new Error(joazcoError));
         return;
       }
       signInDriver(email, password)
@@ -55,7 +55,7 @@ const useConnection = (driver: Partial<Driver>): UseConnectionRest => {
         })
         .catch(() => {
           setLogged(false);
-          reject(new Error(jazziError));
+          reject(new Error(joazcoError));
         })
         .finally(() => setLoadingSignIn(false));
     });
@@ -65,7 +65,7 @@ const useConnection = (driver: Partial<Driver>): UseConnectionRest => {
       new Promise((resolve, reject) => {
         const { signOut: signOutDriver } = driver;
         if (!signOutDriver) {
-          reject(new Error(jazziError));
+          reject(new Error(joazcoError));
           return;
         }
         signOutDriver()

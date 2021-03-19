@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useJazzi } from "../../joazco";
+import { useJoazco } from "../../joazco";
 import { SEO } from "../../types";
 
 const useHome = () => {
@@ -8,10 +8,10 @@ const useHome = () => {
     logged,
     loadingSeo,
     icon,
-    seo: seoJazzi,
+    seo: seoJoazco,
     insertSeo,
-  } = useJazzi();
-  const [seo, setSeo] = useState<SEO>(seoJazzi);
+  } = useJoazco();
+  const [seo, setSeo] = useState<SEO>(seoJoazco);
 
   const setTitle = (title: string) => {
     setSeo({ ...seo, title });
@@ -42,8 +42,8 @@ const useHome = () => {
   };
 
   useEffect(() => {
-    setSeo(seoJazzi);
-  }, [seoJazzi]);
+    setSeo(seoJoazco);
+  }, [seoJoazco]);
 
   return {
     driver,

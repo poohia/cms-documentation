@@ -3,9 +3,9 @@ import { useConnection, useMenus } from "../joazco/hooks";
 import { Menu, Page } from "../types";
 import driver from "../drivers";
 
-const email = process.env.REACT_APP_JAZZI_USER_TEST_USERNAME || "";
-const password = process.env.REACT_APP_JAZZI_USER_TEST_PASSWORD || "";
-const locale = process.env.REACT_APP_JAZZI_TEST_TABLE || "test";
+const email = process.env.REACT_APP_JOAZCO_USER_TEST_USERNAME || "";
+const password = process.env.REACT_APP_JOAZCO_USER_TEST_PASSWORD || "";
+const locale = process.env.REACT_APP_JOAZCO_TEST_TABLE || "test";
 
 const data: Pick<Menu, "title" | "id" | "caption"> = {
   id: "123467",

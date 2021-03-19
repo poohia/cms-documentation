@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
 import { useParams, useHistory } from "react-router-dom";
-import { useJazzi } from "../../../joazco";
+import { useJoazco } from "../../../joazco";
 import { Page } from "../../../types";
 import useQueryUrl from "../../../useQueryUrl";
 
@@ -11,7 +11,7 @@ const usePage = () => {
     menus,
     getPageBySlugFromDatabase,
     listenPageBySlug,
-  } = useJazzi();
+  } = useJoazco();
 
   const { slug } = useParams<{ slug: string }>();
   const { push } = useHistory();

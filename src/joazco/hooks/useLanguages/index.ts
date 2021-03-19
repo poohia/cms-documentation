@@ -32,8 +32,8 @@ export function getDefaultLanguage(languages: string[]): string {
 const useLanguages = (): UseLanguagesRest => {
   const languages: string[] = useMemo(
     () =>
-      process.env.REACT_APP_JAZZI_CMS_LANGUAGES
-        ? process.env.REACT_APP_JAZZI_CMS_LANGUAGES.split(",")
+      process.env.REACT_APP_JOAZCO_CMS_LANGUAGES
+        ? process.env.REACT_APP_JOAZCO_CMS_LANGUAGES.split(",")
         : ["en"],
     []
   );

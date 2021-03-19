@@ -3,8 +3,8 @@ import * as cssValidator from "w3c-css-validator";
 import { useConnection, useStylesheet } from "../joazco/hooks";
 import driver from "../drivers";
 
-const email = process.env.REACT_APP_JAZZI_USER_TEST_USERNAME || "";
-const password = process.env.REACT_APP_JAZZI_USER_TEST_PASSWORD || "";
+const email = process.env.REACT_APP_JOAZCO_USER_TEST_USERNAME || "";
+const password = process.env.REACT_APP_JOAZCO_USER_TEST_PASSWORD || "";
 
 const data: string = ".myclass: {color: black}";
 const dataWithEror: string = ".myclass: {color: 100px}";

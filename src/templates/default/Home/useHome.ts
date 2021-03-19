@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { useJazzi } from "../../../joazco";
+import { useJoazco } from "../../../joazco";
 import useQueryUrl from "../../../useQueryUrl";
 
 const useHome = () => {
@@ -10,7 +10,7 @@ const useHome = () => {
     seoIsListening,
     seo: { title, description, links },
     listenSeo,
-  } = useJazzi();
+  } = useJoazco();
   const { getQueryUrlVar } = useQueryUrl();
   const liveShare = useMemo(() => getQueryUrlVar("liveChange"), []);
 

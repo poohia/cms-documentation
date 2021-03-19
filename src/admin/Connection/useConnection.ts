@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { useJazzi } from "../../joazco";
+import { useJoazco } from "../../joazco";
 
 const useConnection = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const { loadingSignIn, icon } = useJazzi();
+  const { loadingSignIn, icon } = useJoazco();
 
   return {
     email,

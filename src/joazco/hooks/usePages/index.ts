@@ -1,7 +1,7 @@
 import { useState, useCallback } from "react";
 import { Driver, Page } from "../../../types";
 
-const jazziError = "Joazco::: Pages service error";
+const joazcoError = "Joazco::: Pages service error";
 
 export type UsePagesRest = {
   loadingPages: boolean | null;
@@ -29,7 +29,7 @@ const usePages = (driver: Partial<Driver>): UsePagesRest => {
       new Promise((resolve, reject) => {
         const { getPages: getPagesDriver } = driver;
         if (!getPagesDriver) {
-          reject(new Error(jazziError));
+          reject(new Error(joazcoError));
           return;
         }
         setLoadingPages(true);
@@ -60,7 +60,7 @@ const usePages = (driver: Partial<Driver>): UsePagesRest => {
       new Promise((resolve, reject) => {
         const { getPage: getPageDriver } = driver;
         if (!getPageDriver) {
-          reject(new Error(jazziError));
+          reject(new Error(joazcoError));
           return;
         }
         getPageDriver(id).then(resolve).catch(reject);
@@ -73,7 +73,7 @@ const usePages = (driver: Partial<Driver>): UsePagesRest => {
       new Promise((resolve, reject) => {
         const { getPageBySlug: getPageBySlugDriver } = driver;
         if (!getPageBySlugDriver) {
-          reject(new Error(jazziError));
+          reject(new Error(joazcoError));
           return;
         }
         getPageBySlugDriver(slug).then(resolve).catch(reject);
@@ -107,7 +107,7 @@ const usePages = (driver: Partial<Driver>): UsePagesRest => {
         }
         const { createPage: createPageDriver } = driver;
         if (!createPageDriver) {
-          reject(new Error(jazziError));
+          reject(new Error(joazcoError));
           return;
         }
         setLoadingPages(true);
@@ -127,7 +127,7 @@ const usePages = (driver: Partial<Driver>): UsePagesRest => {
       new Promise((resolve, reject) => {
         const { updatePage: updatePageDriver } = driver;
         if (!updatePageDriver) {
-          reject(new Error(jazziError));
+          reject(new Error(joazcoError));
           return;
         }
         setLoadingPages(true);
@@ -144,7 +144,7 @@ const usePages = (driver: Partial<Driver>): UsePagesRest => {
       new Promise((resolve, reject) => {
         const { removePage: removePageDriver } = driver;
         if (!removePageDriver) {
-          reject(new Error(jazziError));
+          reject(new Error(joazcoError));
           return;
         }
         setLoadingPages(true);

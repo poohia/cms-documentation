@@ -6,7 +6,7 @@ import useFixtures from "./useFixtures";
 const Fixtures = () => {
   const {
     loading,
-    menusJazzi,
+    menusJoazco,
     loadFixutres,
     configMenus,
     resetDatabase,
@@ -26,7 +26,7 @@ const Fixtures = () => {
           loadFixutres();
         }}
         loading={loading}
-        disabled={menusJazzi.length > 0}
+        disabled={menusJoazco.length > 0}
       >
         Load fixtures
       </Button>
@@ -35,7 +35,7 @@ const Fixtures = () => {
           configMenus();
         }}
         loading={loading}
-        disabled={menusJazzi.length === 0}
+        disabled={menusJoazco.length === 0}
       >
         Config Menu
       </Button>

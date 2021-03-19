@@ -1,10 +1,10 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
-import { useJazzi } from "../../joazco";
+import { useJoazco } from "../../joazco";
 import { Loader, SignInForm } from "./components";
 
 const Connection = () => {
-  const { logged, getCurrentUser, signIn } = useJazzi();
+  const { logged, getCurrentUser, signIn } = useJoazco();
 
   if (logged === null) {
     getCurrentUser();

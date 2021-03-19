@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
 import { useParams } from "react-router-dom";
 import useMenuAdmin from "../../../admin/Menu/useMenu";
-import { useJazzi } from "../../../joazco";
+import { useJoazco } from "../../../joazco";
 import { Menu } from "../../../types";
 import useQueryUrl from "../../../useQueryUrl";
 
@@ -29,7 +29,7 @@ const useMenu = () => {
     menusIsListening,
     listenStylesheet,
     listenMenus,
-  } = useJazzi();
+  } = useJoazco();
   const { getQueryUrlVar } = useQueryUrl();
   const liveShare = useMemo(() => getQueryUrlVar("liveChange"), []);
   useMenuAdmin();

@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from "react";
 import { Driver, Links, SEO } from "../../../types";
 
-const jazziError = "Joazco::: Seo service error";
+const joazcoError = "Joazco::: Seo service error";
 
 export type UseSeoRest = {
   loadingSeo: boolean | null;
@@ -46,7 +46,7 @@ const useSeo = (driver: Partial<Driver>): UseSeoRest => {
       new Promise((resolve, reject) => {
         const { getSeo: getSeoDriver } = driver;
         if (!getSeoDriver) {
-          reject(new Error(jazziError));
+          reject(new Error(joazcoError));
           return;
         }
         setLoadingSeo(true);
@@ -69,7 +69,7 @@ const useSeo = (driver: Partial<Driver>): UseSeoRest => {
       new Promise((resolve, reject) => {
         const { insertSeo: insertSeoDriver } = driver;
         if (!insertSeoDriver) {
-          reject(new Error(jazziError));
+          reject(new Error(joazcoError));
           return;
         }
         setLoadingSeo(true);
@@ -89,7 +89,7 @@ const useSeo = (driver: Partial<Driver>): UseSeoRest => {
       new Promise((resolve, reject) => {
         const { insertSeo: insertSeoDriver } = driver;
         if (!insertSeoDriver) {
-          reject(new Error(jazziError));
+          reject(new Error(joazcoError));
           return;
         }
         setLoadingSeo(true);

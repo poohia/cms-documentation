@@ -1,10 +1,10 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { useJazzi } from "../../../../../joazco";
+import { useJoazco } from "../../../../../joazco";
 import { Card } from "../../../../../styled-components";
 
 const MenusCardGroup = () => {
-  const { menus } = useJazzi();
+  const { menus } = useJoazco();
   const { push } = useHistory();
 
   return (

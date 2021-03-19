@@ -1,12 +1,12 @@
 import React from "react";
 import { Icon } from "semantic-ui-react";
-import { useJazzi } from "../../../../joazco";
+import { useJoazco } from "../../../../joazco";
 import { Panel } from "../../../../styled-components";
 import { PanelMenuProps } from "../../types";
 import PopupBtnUpdateMenu from "../PopupBtnUpdateMenu";
 
 const PanelMenu = ({ menu }: PanelMenuProps) => {
-  const { removeMenu, removePageFromMenu } = useJazzi();
+  const { removeMenu, removePageFromMenu } = useJoazco();
 
   return (
     <Panel.PanelContainer>

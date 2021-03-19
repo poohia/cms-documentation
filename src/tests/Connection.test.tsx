@@ -7,11 +7,11 @@ import {
 } from "@testing-library/react";
 import driver from "../drivers";
 import { useConnection } from "../joazco/hooks";
-import JazziProvider from "../joazco";
+import JoazcoProvider from "../joazco";
 import Connection from "../admin/Connection";
 
-const email = process.env.REACT_APP_JAZZI_USER_TEST_USERNAME || "";
-const password = process.env.REACT_APP_JAZZI_USER_TEST_PASSWORD || "";
+const email = process.env.REACT_APP_JOAZCO_USER_TEST_USERNAME || "";
+const password = process.env.REACT_APP_JOAZCO_USER_TEST_PASSWORD || "";
 
 test("test signIn", async () => {
   const { result } = renderHook(() => useConnection(driver));
@@ -44,18 +44,18 @@ test("test getCurrentUser", async () => {
 //   // act(() => {
 //   // actRender(() => {
 //   //   component = create(
-//   //     <JazziProvider>
+//   //     <JoazcoProvider>
 //   //       <Connection />
-//   //     </JazziProvider>
+//   //     </JoazcoProvider>
 //   //   );
 //   // });
 //   // });
 //   // const instance = component.root;
 //   actRender(() => {
 //     render(
-//       <JazziProvider driver={driver}>
+//       <JoazcoProvider driver={driver}>
 //         <Connection />
-//       </JazziProvider>
+//       </JoazcoProvider>
 //     );
 //   });
 //   const loadingElement = screen.getByText(/loading.../i);

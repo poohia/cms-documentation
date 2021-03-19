@@ -13,16 +13,16 @@ type Theme = DefaultTheme & {
 };
 
 export const defaultTheme: Theme = {
-  primary: process.env.REACT_APP_JAZZI_PRIMARY_COLOR || "#3867d6",
-  secondary: process.env.REACT_APP_JAZZI_SECONDARY_COLOR || "#f8c471",
-  success: process.env.REACT_APP_JAZZI_SUCCESS_COLOR || "#2dd36f",
-  warning: process.env.REACT_APP_JAZZI_WARNING_COLOR || "#ffc409",
-  danger: process.env.REACT_APP_JAZZI_DANGER_COLOR || "#eb445a",
-  black: process.env.REACT_APP_JAZZI_BLACK_COLOR || "#34495e",
-  backgroundBody: process.env.REACT_APP_JAZZI_BACKGROUND_COLOR || "#f2f3f4",
+  primary: process.env.REACT_APP_JOAZCO_PRIMARY_COLOR || "#3867d6",
+  secondary: process.env.REACT_APP_JOAZCO_SECONDARY_COLOR || "#f8c471",
+  success: process.env.REACT_APP_JOAZCO_SUCCESS_COLOR || "#2dd36f",
+  warning: process.env.REACT_APP_JOAZCO_WARNING_COLOR || "#ffc409",
+  danger: process.env.REACT_APP_JOAZCO_DANGER_COLOR || "#eb445a",
+  black: process.env.REACT_APP_JOAZCO_BLACK_COLOR || "#34495e",
+  backgroundBody: process.env.REACT_APP_JOAZCO_BACKGROUND_COLOR || "#f2f3f4",
   backgroundColorMenu:
-    process.env.REACT_APP_JAZZI_BACKGROUND_COLOR_MENU || "#f8c471",
-  fontSize: process.env.REACT_APP_JAZZI_FONT_SIZE || "18px",
+    process.env.REACT_APP_JOAZCO_BACKGROUND_COLOR_MENU || "#f8c471",
+  fontSize: process.env.REACT_APP_JOAZCO_FONT_SIZE || "18px",
 };
 
 export const GlobalStyle = createGlobalStyle<{ theme: Theme }>`

@@ -1,6 +1,6 @@
 import { Driver } from "../types";
 
-const d = process.env.REACT_APP_JAZZI_CMS_DRIVER || "error";
+const d = process.env.REACT_APP_JOAZCO_CMS_DRIVER || "error";
 const driver: Partial<Driver> = {};
 
 import(`./${d}/`).then((value) => {

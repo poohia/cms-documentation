@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { Dropdown, FlagNameValues } from "semantic-ui-react";
-import { useJazzi } from "../../../../joazco";
+import { useJoazco } from "../../../../joazco";
 import { FlagMenuItem } from "../../../../styled-components";
 import { MenuListItem } from "../../styles";
 
 const useDropdownLanguages = () => {
-  const { locale, languages, setLocale } = useJazzi();
+  const { locale, languages, setLocale } = useJoazco();
   const [openFlags, setOpenFlags] = useState<boolean>(false);
 
   return {

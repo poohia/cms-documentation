@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import usePages from "../Pages/usePages";
-import { useJazzi } from "../../joazco";
+import { useJoazco } from "../../joazco";
 import { Page } from "../../types";
 
 const usePage = () => {
@@ -13,7 +13,7 @@ const usePage = () => {
     pages,
     getPage,
     updatePage,
-  } = useJazzi();
+  } = useJoazco();
   const { id } = useParams<{ id: string }>();
   const [page, setPage] = useState<Page | undefined>(getPage(id));
   const { createSlug } = usePages();

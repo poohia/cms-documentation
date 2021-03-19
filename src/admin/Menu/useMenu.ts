@@ -1,4 +1,4 @@
-import { useJazzi } from "../../joazco";
+import { useJoazco } from "../../joazco";
 
 const useMenu = () => {
   const {
@@ -17,7 +17,7 @@ const useMenu = () => {
     getPages,
     getMenus,
     getStylesheet,
-  } = useJazzi();
+  } = useJoazco();
 
   if (logged === null) {
     getCurrentUser().catch();

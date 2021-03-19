@@ -6,7 +6,7 @@ import usePages, { UsePagesRest } from "./usePages";
 import useMenus, { UseMenusRest } from "./useMenus";
 import useStylesheet, { UseStylesheetRest } from "./useStylesheet";
 
-export type JazziContextProps = UseConfigRest &
+export type JoazcoContextProps = UseConfigRest &
   UseLanguagesRest &
   UseConnectionRest &
   UseSeoRest &

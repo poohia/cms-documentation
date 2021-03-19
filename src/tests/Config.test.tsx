@@ -27,7 +27,7 @@ test("test load config", () => {
   const { driver, icon, env } = result.current;
   const { languages, locale } = resultLanguges.current;
 
-  expect(driver).toStrictEqual(process.env.REACT_APP_JAZZI_CMS_DRIVER);
+  expect(driver).toStrictEqual(process.env.REACT_APP_JOAZCO_CMS_DRIVER);
   expect(languages).toStrictEqual(["en", "fr"]);
   expect(icon).toStrictEqual("logo.png");
   expect(locale).toStrictEqual("en");

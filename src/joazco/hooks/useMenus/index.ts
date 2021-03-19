@@ -1,7 +1,7 @@
 import { useState, useCallback } from "react";
 import { Driver, Menu, MenuWithoutPage, Page } from "../../../types";
 
-const jazziError = "Joazco::: Menus service error";
+const joazcoError = "Joazco::: Menus service error";
 
 export type UseMenusRest = {
   loadingMenus: boolean | null;
@@ -68,7 +68,7 @@ const useMenus = (driver: Partial<Driver>, pages: Page[]): UseMenusRest => {
       new Promise((resolve, reject) => {
         const { getMenus: getMenusDriver } = driver;
         if (!getMenusDriver) {
-          reject(new Error(jazziError));
+          reject(new Error(joazcoError));
           return;
         }
         setLoadingMenus(true);
@@ -114,7 +114,7 @@ const useMenus = (driver: Partial<Driver>, pages: Page[]): UseMenusRest => {
         }
         const { createMenu: createMenuDriver } = driver;
         if (!createMenuDriver) {
-          reject(new Error(jazziError));
+          reject(new Error(joazcoError));
           return;
         }
         setLoadingMenus(true);
@@ -144,7 +144,7 @@ const useMenus = (driver: Partial<Driver>, pages: Page[]): UseMenusRest => {
         }
         const { updateMenu: updateMenuDriver } = driver;
         if (!updateMenuDriver) {
-          reject(new Error(jazziError));
+          reject(new Error(joazcoError));
           return;
         }
         setLoadingMenus(true);
@@ -166,7 +166,7 @@ const useMenus = (driver: Partial<Driver>, pages: Page[]): UseMenusRest => {
       new Promise((resolve, reject) => {
         const { removeMenu: removeMenuDriver } = driver;
         if (!removeMenuDriver) {
-          reject(new Error(jazziError));
+          reject(new Error(joazcoError));
           return;
         }
         setLoadingMenus(true);
@@ -187,7 +187,7 @@ const useMenus = (driver: Partial<Driver>, pages: Page[]): UseMenusRest => {
       new Promise((resolve, reject) => {
         const { updateMenu: updateMenuDriver } = driver;
         if (!updateMenuDriver) {
-          reject(new Error(jazziError));
+          reject(new Error(joazcoError));
           return;
         }
         setLoadingMenus(true);
@@ -217,7 +217,7 @@ const useMenus = (driver: Partial<Driver>, pages: Page[]): UseMenusRest => {
       new Promise((resolve, reject) => {
         const { updateMenu: updateMenuDriver } = driver;
         if (!updateMenuDriver) {
-          reject(new Error(jazziError));
+          reject(new Error(joazcoError));
           return;
         }
         setLoadingMenus(true);

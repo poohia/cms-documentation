@@ -2,9 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { ThemeProvider } from "styled-components";
 import driver from "./drivers";
-// import AppProvider from "./AppProvider";
 import App from "./App";
-import JazziProvider from "./joazco";
+import JoazcoProvider from "./joazco";
 import { defaultTheme, GlobalStyle } from "./styled-components/theme";
 
 import "./index.scss";
@@ -12,11 +11,10 @@ import "./index.scss";
 ReactDOM.render(
   <React.StrictMode>
     <ThemeProvider theme={defaultTheme}>
-      <JazziProvider driver={driver}>
-        {/* <AppProvider /> */}
+      <JoazcoProvider driver={driver}>
         <App />
         <GlobalStyle theme={defaultTheme} />
-      </JazziProvider>
+      </JoazcoProvider>
     </ThemeProvider>
   </React.StrictMode>,
   document.getElementById("root")

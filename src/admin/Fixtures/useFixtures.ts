@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import { useJazzi } from "../../joazco";
+import { useJoazco } from "../../joazco";
 import { MenuWithoutPage, Page, SEO } from "../../types";
 
 const seo: SEO = {
@@ -86,7 +86,7 @@ const menus: MenuWithoutPage[] = [
 
 const useFixtures = () => {
   const {
-    menus: menusJazzi,
+    menus: menusJoazco,
     getMenus,
     getPages,
     insertSeo,
@@ -96,7 +96,7 @@ const useFixtures = () => {
     updatePage,
     removeMenu,
     removePage,
-  } = useJazzi();
+  } = useJoazco();
   const [loading, setLoading] = useState<boolean>(false);
 
   const resetDatabase = useCallback(() => {
@@ -158,9 +158,9 @@ const useFixtures = () => {
       }, key * 200);
     });
     setTimeout(() => window.location.reload(), menus.length * 200 + 200);
-  }, [menusJazzi]);
+  }, [menusJoazco]);
 
-  return { menusJazzi, loading, loadFixutres, configMenus, resetDatabase };
+  return { menusJoazco, loading, loadFixutres, configMenus, resetDatabase };
 };
 
 export default useFixtures;

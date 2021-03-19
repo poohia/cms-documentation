@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import * as cssValidator from "w3c-css-validator";
-import { useJazzi } from "../../joazco";
+import { useJoazco } from "../../joazco";
 
 const useStylesheet = () => {
   const {
@@ -9,7 +9,7 @@ const useStylesheet = () => {
     loadingStylesheet,
     stylesheet,
     insertStylesheet,
-  } = useJazzi();
+  } = useJoazco();
   const [css, setCss] = useState<string>("");
   const [checkCss, setCheckCss] = useState<string>("");
   const [canSave, setCanSave] = useState<boolean>(false);

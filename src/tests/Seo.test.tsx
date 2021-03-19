@@ -3,8 +3,8 @@ import { useConnection, useSeo } from "../joazco/hooks";
 import { SEO } from "../types";
 import driver from "../drivers";
 
-const email = process.env.REACT_APP_JAZZI_USER_TEST_USERNAME || "";
-const password = process.env.REACT_APP_JAZZI_USER_TEST_PASSWORD || "";
+const email = process.env.REACT_APP_JOAZCO_USER_TEST_USERNAME || "";
+const password = process.env.REACT_APP_JOAZCO_USER_TEST_PASSWORD || "";
 
 const data: SEO = {
   title: "test",
