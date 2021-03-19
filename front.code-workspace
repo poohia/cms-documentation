@@ -1,0 +1,44 @@
+{
+  "folders": [
+    {
+      "path": "./src/admin"
+    },
+    {
+      "path": "./src/templates"
+    },
+    {
+      "path": "./src/joazco"
+    },
+    {
+      "path": "./src/drivers"
+    },
+    {
+      "path": "./src/styled-components"
+    },
+    {
+      "path": "src"
+    },
+    {
+      "path": "./src/tests"
+    },
+    {
+      "path": "."
+    }
+  ],
+  "settings": {
+    "editor.formatOnSave": true,
+    "eslint.packageManager": "npm",
+    "eslint.run": "onSave",
+    "eslint.nodePath": "./node_modules",
+    "eslint.options": {
+      "configFile": "./.eslintrc"
+    },
+    "javascript.validate.enable": false,
+    "prettier.disableLanguages": ["json", "yaml", "yml", "php"],
+    "eslint.validate": ["javascript", "javascriptreact", "typescriptreact"],
+    "workbench.colorCustomizations": {},
+    "emmet.showAbbreviationSuggestions": false,
+    "emmet.showExpandedAbbreviation": "never",
+    "typescript.tsdk": "jazzi-cms-documentation/node_modules/typescript/lib"
+  }
+}

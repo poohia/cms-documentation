@@ -1,0 +1,32 @@
+{
+  "env": {
+    "es6": true,
+    "node": true
+  },
+  "overrides": [
+    {
+      "files": ["src/**/*.tsx", "src/**/*.ts"]
+    }
+  ],
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
+  "root": true,
+  "extends": ["airbnb-typescript", "prettier"],
+  "ignorePatterns": "*.test*",
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "rules": {
+    "@typescript-eslint/quotes": ["error", "double"],
+    "@typescript-eslint/comma-dangle": ["off"],
+    "@typescript-eslint/indent": ["off"],
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      { "argsIgnorePattern": "^_" }
+    ],
+    "react/jsx-props-no-spreading": ["off"],
+    "react/jsx-wrap-multilines": ["off"],
+    "no-alert": ["off"],
+    "import/export": ["error"]
+  }
+}
