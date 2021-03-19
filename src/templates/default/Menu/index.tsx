@@ -16,13 +16,7 @@ import {
 import useMenu from "./useMenu";
 
 const Menu = () => {
-  const {
-    icon,
-    seo: { title },
-    loadingMenus,
-    openMenuResponsive,
-    setOpenMenuResponsive,
-  } = useMenu();
+  const { icon, title, openMenuResponsive, setOpenMenuResponsive } = useMenu();
 
   return (
     <>
@@ -52,8 +46,7 @@ const Menu = () => {
               </MenuBrandTitle>
             </MenuListItem>
             <DropdownLanguages />
-
-            {loadingMenus === false && <MenuAccordion />}
+            <MenuAccordion />
           </MenuList>
           <MenuFooter className="joazco--menu-footer">
             <a

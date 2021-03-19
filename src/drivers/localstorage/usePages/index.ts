@@ -1,9 +1,9 @@
 import { getLocale } from "../..";
-import { Page } from "../../../types";
+import { DriverPages, Page } from "../../../types";
 
 const databaseError = "LocalStorage::: Error database connection";
 
-const usePages = () => {
+const usePages = (): DriverPages => {
   const locale = getLocale();
   const localStorageKey = `${locale}.pages`;
 
@@ -13,6 +13,10 @@ const usePages = () => {
       const pages = pagesDatabase ? JSON.parse(pagesDatabase) : [];
       resolve(pages);
     });
+
+  const listenPages = (_callback: (pages: Page[]) => void) => {
+    throw new Error("LiveChange function dosn't work with driver localstorage");
+  };
 
   const getPage = (id: Page["id"]): Promise<Page> =>
     new Promise((resolve, reject) => {
@@ -93,6 +97,7 @@ const usePages = () => {
 
   return {
     getPages,
+    listenPages,
     getPage,
     getPageBySlug,
     listenPageBySlug,

@@ -1,9 +1,9 @@
-import { MenuWithoutPage } from "../../../types";
+import { DriverMenus, MenuWithoutPage } from "../../../types";
 
 const databaseError = "Test::: Error database connection";
 const menus: MenuWithoutPage[] = [];
 
-const useMenus = () => {
+const useMenus = (): DriverMenus => {
   const getMenus = (): Promise<MenuWithoutPage[]> =>
     new Promise((resolve, _reject) => {
       resolve(menus);

@@ -1,6 +1,7 @@
 import { getLocale } from "../..";
+import { DriverStylesheet } from "../../../types";
 
-const useStylesheet = () => {
+const useStylesheet = (): DriverStylesheet => {
   const locale = getLocale();
   const localStorageKey = `${locale}.stylesheet`;
   const insertStylesheet = (data: string): Promise<string> =>

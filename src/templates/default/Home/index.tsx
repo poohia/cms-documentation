@@ -11,16 +11,9 @@ import {
 } from "./styles";
 
 const Home = () => {
-  const {
-    loadingSeo,
-    loadingMenus,
-    loadingPages,
-    title,
-    description,
-    links,
-  } = useHome();
+  const { loading, title, description, links } = useHome();
 
-  if (loadingSeo || loadingMenus || loadingPages) {
+  if (loading) {
     return <Loader />;
   }
   if (title === "") {
@@ -58,8 +51,8 @@ const Home = () => {
             <MenusCardGroup />
           </Grid.Column>
         </Grid.Row>
-        <About description={description} />
-        <Links links={links} />
+        {description && <About description={description} />}
+        {links && <Links links={links} />}
       </Grid>
     </HomeContent>
   );

@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import { useHistory } from "react-router-dom";
 import * as H from "history";
 
@@ -21,28 +22,31 @@ const useQueryUrl = (): QuestionnaireContextQueryUrlProps => {
 
   const searchParams = new URLSearchParams(search);
 
-  const getQueryUrlVar = (key: string): string | null => searchParams.get(key);
+  const getQueryUrlVar = useCallback(
+    (key: string): string | null => searchParams.get(key),
+    []
+  );
 
-  const addQueryUrlVar = (key: string, value: string): void => {
+  const addQueryUrlVar = useCallback((key: string, value: string): void => {
     searchParams.set(key, value);
     push({
       pathname,
       search: searchParams.toString(),
     });
-  };
+  }, []);
 
-  const removeQueryUrlVar = (key: string): void => {
+  const removeQueryUrlVar = useCallback((key: string): void => {
     searchParams.delete(key);
 
     push({
       pathname,
       search: searchParams.toString(),
     });
-  };
+  }, []);
 
-  const getQueryUrlVars = (
-    keys: QUERYVARIABLES[]
-  ): { [key in QUERYVARIABLES]: string | null } => {
+  const getQueryUrlVars = useCallback((keys: QUERYVARIABLES[]): {
+    [key in QUERYVARIABLES]: string | null;
+  } => {
     const results: { [key in QUERYVARIABLES]: string | null } = {} as {
       [key in QUERYVARIABLES]: string;
     };
@@ -51,20 +55,23 @@ const useQueryUrl = (): QuestionnaireContextQueryUrlProps => {
       results[key] = result;
     });
     return results;
-  };
+  }, []);
 
-  const addQueryUrlVars = (keys: { key: string; value: string }[]): void => {
-    keys.forEach(({ key, value }) => {
-      searchParams.set(key, value);
-    });
+  const addQueryUrlVars = useCallback(
+    (keys: { key: string; value: string }[]): void => {
+      keys.forEach(({ key, value }) => {
+        searchParams.set(key, value);
+      });
 
-    push({
-      pathname,
-      search: searchParams.toString(),
-    });
-  };
+      push({
+        pathname,
+        search: searchParams.toString(),
+      });
+    },
+    []
+  );
 
-  const removeQueryUrlVars = (keys: string[]): void => {
+  const removeQueryUrlVars = useCallback((keys: string[]): void => {
     keys.forEach((key) => {
       searchParams.delete(key);
     });
@@ -73,7 +80,7 @@ const useQueryUrl = (): QuestionnaireContextQueryUrlProps => {
       pathname,
       search: searchParams.toString(),
     });
-  };
+  }, []);
 
   return {
     getQueryUrlVar,

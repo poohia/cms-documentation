@@ -1,7 +1,7 @@
 import { getLocale } from "../..";
-import { SEO } from "../../../types";
+import { DriverSeo, SEO } from "../../../types";
 
-const useSeo = () => {
+const useSeo = (): DriverSeo => {
   const locale = getLocale();
   const localStorageKey = `${locale}.seo`;
 

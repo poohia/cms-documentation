@@ -1,6 +1,8 @@
+import { DriverStylesheet } from "../../../types";
+
 let styleSheet: string = "";
 
-const useStylesheet = () => {
+const useStylesheet = (): DriverStylesheet => {
   const insertStylesheet = (data: string): Promise<string> =>
     new Promise((resolve, _reject) => {
       styleSheet = data;

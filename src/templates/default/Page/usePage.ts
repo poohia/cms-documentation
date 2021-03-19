@@ -1,28 +1,20 @@
-import { useState, useEffect, useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { useParams, useHistory } from "react-router-dom";
-import { useJoazco } from "../../../joazco";
 import { Page } from "../../../types";
-import useQueryUrl from "../../../useQueryUrl";
+import { useNav, usePage as usePageJoazco } from "../../../joazcov2";
 
 const usePage = () => {
-  const [page, setPage] = useState<Page | null>(null);
-  const {
-    loadingPages,
-    menus,
-    getPageBySlugFromDatabase,
-    listenPageBySlug,
-  } = useJoazco();
-
   const { slug } = useParams<{ slug: string }>();
   const { push } = useHistory();
-  const { getQueryUrlVar } = useQueryUrl();
-  const liveShare = useMemo(() => getQueryUrlVar("liveChange"), []);
+
+  const { data: menus } = useNav();
+  const { loading, data: page } = usePageJoazco({ slug });
 
   const links: {
     previousPage: Page | null;
     nextPage: Page | null;
   } = useMemo(() => {
-    if (menus.length === 0 || page === null) {
+    if (menus.length === 0 || page === undefined) {
       return { previousPage: null, nextPage: null };
     }
     let previousPage: Page | null = null;
@@ -53,25 +45,13 @@ const usePage = () => {
   const { previousPage, nextPage } = links;
 
   useEffect(() => {
-    if (liveShare) {
-      listenPageBySlug(slug, (value) => {
-        if (value) {
-          setPage(value);
-        } else {
-          push("/");
-        }
-      });
-    } else {
-      getPageBySlugFromDatabase(slug)
-        .then((value) => {
-          setPage(value);
-        })
-        .catch(() => push("/"));
+    if (!loading && page === undefined) {
+      push("/");
     }
   }, [slug]);
 
   return {
-    loadingPages,
+    loading,
     page,
     previousPage,
     nextPage,

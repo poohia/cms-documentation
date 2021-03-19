@@ -1,8 +1,11 @@
-import React, { Suspense, lazy } from "react";
+import React, { Suspense, lazy, useMemo } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { useJoazco } from "./joazco";
 import { SuspenseContent } from "./styles";
+import useConfig from "./joazcov2/useConfig";
+import { useSeoWithoutHistory as useSeo } from "./joazcov2/useSeo";
+import useLanguages from "./joazcov2/useLanguages";
 
 const template: string = process.env.REACT_APP_JOAZCO_TEMPLATE || "default";
 
@@ -20,18 +23,22 @@ const Page = lazy(() => import(`./templates/${template}/Page`));
 const NotFound = lazy(() => import(`./templates/${template}/NotFound`));
 
 function App() {
-  const {
-    icon,
-    enableFixtures,
-    locale,
-    seo: { title, description, keywords, favIcon },
-    stylesheet,
-  } = useJoazco();
+  const { enableFixtures, stylesheet } = useJoazco();
+
+  const { icon } = useConfig();
+  const { locale } = useLanguages();
+  const { data: seo } = useSeo();
+
+  const title = useMemo(() => seo?.title, [seo]);
+  const description = useMemo(() => seo?.description, [seo]);
+  const keywords = useMemo(() => seo?.keywords, [seo]);
+  const favIcon = useMemo(() => seo?.favIcon, [seo]);
+
   return (
     <>
       <Helmet htmlAttributes={{ lang: locale }}>
         <meta charSet="utf-8" />
-        <title>{title}</title>
+        {title && <title>{title}</title>}
         <base href="/" />
         <meta property="og:site_name" content={title} />
         <meta name="og:title" property="og:title" content={title} />
@@ -40,10 +47,10 @@ function App() {
         <meta property="og:type" content="website" />
         <meta property="og:description" content={description} />
         <meta property="og:locale" content={locale} />
-        <meta name="description" content={description} />
-        <meta name="keywords" content={keywords} />
-        <link rel="icon" href={icon} />
+        {description && <meta name="description" content={description} />}
+        {keywords && <meta name="keywords" content={keywords} />}
         {favIcon && <link rel="icon" href={favIcon} />}
+        <link rel="icon" href={icon} />
         <style>{stylesheet}</style>
       </Helmet>
       <Router>

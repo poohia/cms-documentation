@@ -1,4 +1,4 @@
-import { User } from "../../../types";
+import { DriverConnection, User } from "../../../types";
 
 const userTest: User = {
   uid: "1234",
@@ -6,7 +6,7 @@ const userTest: User = {
   email: "poohia.studio@gmail.com",
 };
 
-const useConnection = () => {
+const useConnection = (): DriverConnection => {
   const onceCheckLogged = (): Promise<User> =>
     new Promise((resolve, _reject) => {
       resolve(userTest);

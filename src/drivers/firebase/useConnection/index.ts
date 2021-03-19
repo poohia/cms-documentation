@@ -1,12 +1,12 @@
 import * as firebase from "firebase/app";
 import "firebase/auth";
 
-import { User } from "../../../types";
+import { DriverConnection, User } from "../../../types";
 
 const defaultFirebase = firebase.default;
 const databaseError = "Firebase::: Error database connection";
 
-const useConnection = () => {
+const useConnection = (): DriverConnection => {
   const onceCheckLogged = (): Promise<User> =>
     new Promise((resolve, reject) => {
       const unSubscribe = defaultFirebase.auth().onAuthStateChanged((user) => {

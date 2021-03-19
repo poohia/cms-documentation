@@ -1,24 +1,19 @@
 import { useMemo } from "react";
-import { useJoazco } from "../../../joazco";
-import useQueryUrl from "../../../useQueryUrl";
+import { useSeo as useSeoJoazco } from "../../../joazcov2";
 
 const useHome = () => {
-  const {
-    loadingSeo,
-    loadingMenus,
-    loadingPages,
-    seoIsListening,
-    seo: { title, description, links },
-    listenSeo,
-  } = useJoazco();
-  const { getQueryUrlVar } = useQueryUrl();
-  const liveShare = useMemo(() => getQueryUrlVar("liveChange"), []);
+  const { data: seo, loading } = useSeoJoazco();
 
-  if (liveShare && !seoIsListening) {
-    listenSeo();
-  }
+  const title = useMemo(() => seo?.title, [seo]);
+  const description = useMemo(() => seo?.description, [seo]);
+  const links = useMemo(() => seo?.links, [seo]);
 
-  return { loadingSeo, loadingMenus, loadingPages, title, description, links };
+  return {
+    loading,
+    title,
+    description,
+    links,
+  };
 };
 
 export default useHome;

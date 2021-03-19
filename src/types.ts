@@ -48,6 +48,7 @@ export interface DriverMenus {
 }
 export interface DriverPages {
   getPages: () => Promise<Page[]>;
+  listenPages: (callback: (pages: Page[]) => void) => void;
   getPage: (id: Page["id"]) => Promise<Page>;
   getPageBySlug: (slug: Page["slug"]) => Promise<Page>;
   listenPageBySlug: (

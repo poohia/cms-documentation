@@ -1,9 +1,9 @@
 import { getLocale } from "../..";
-import { MenuWithoutPage } from "../../../types";
+import { DriverMenus, MenuWithoutPage } from "../../../types";
 
 const databaseError = "LocalStorage::: Error database connection";
 
-const useMenus = () => {
+const useMenus = (): DriverMenus => {
   const locale = getLocale();
   const localStorageKey = `${locale}.menus`;
 

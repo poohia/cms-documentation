@@ -1,14 +1,14 @@
 import * as firebase from "firebase/app";
 import "firebase/database";
 import { getLocale } from "../..";
-import { MenuWithoutPage } from "../../../types";
+import { DriverMenus, MenuWithoutPage } from "../../../types";
 
 const defaultFirebase = firebase.default;
 const database = defaultFirebase.database();
 
 const databaseError = "Firebase::: Error database connection";
 
-const useMenus = () => {
+const useMenus = (): DriverMenus => {
   const locale = getLocale();
   const getMenus = (): Promise<MenuWithoutPage[]> =>
     new Promise((resolve, reject) => {

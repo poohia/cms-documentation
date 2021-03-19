@@ -1,12 +1,13 @@
 import * as firebase from "firebase/app";
 import "firebase/database";
 import { getLocale } from "../..";
+import { DriverStylesheet } from "../../../types";
 
 const defaultFirebase = firebase.default;
 const database = defaultFirebase.database();
 const databaseError = "Firebase::: Error database connection";
 
-const useStylesheet = () => {
+const useStylesheet = (): DriverStylesheet => {
   const locale = getLocale();
   const insertStylesheet = (data: string): Promise<string> =>
     new Promise((resolve, reject) => {

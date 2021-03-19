@@ -1,13 +1,15 @@
-import { Page } from "../../../types";
+import { DriverPages, Page } from "../../../types";
 
 const databaseError = "Test::: Error database connection";
 const pages: Page[] = [];
 
-const usePages = () => {
+const usePages = (): DriverPages => {
   const getPages = (): Promise<Page[]> =>
     new Promise((resolve, _reject) => {
       resolve(pages);
     });
+
+  const listenPages = (_callback: (pages: Page[]) => void) => {};
 
   const getPage = (id: Page["id"]): Promise<Page> =>
     new Promise((resolve, reject) => {
@@ -67,6 +69,7 @@ const usePages = () => {
 
   return {
     getPages,
+    listenPages,
     getPage,
     getPageBySlug,
     listenPageBySlug,

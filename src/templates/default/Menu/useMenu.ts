@@ -1,9 +1,8 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
 import { useParams } from "react-router-dom";
+import { useConfig, useNav, useSeo } from "../../../joazcov2";
 import useMenuAdmin from "../../../admin/Menu/useMenu";
-import { useJoazco } from "../../../joazco";
 import { Menu } from "../../../types";
-import useQueryUrl from "../../../useQueryUrl";
 
 function initActiveIndex(slug: string, menus: Menu[]): number {
   if (typeof slug === "undefined") {
@@ -20,18 +19,9 @@ function initActiveIndex(slug: string, menus: Menu[]): number {
 }
 
 const useMenu = () => {
-  const {
-    icon,
-    seo,
-    menus,
-    loadingMenus,
-    stylesheetIsListening,
-    menusIsListening,
-    listenStylesheet,
-    listenMenus,
-  } = useJoazco();
-  const { getQueryUrlVar } = useQueryUrl();
-  const liveShare = useMemo(() => getQueryUrlVar("liveChange"), []);
+  const { icon } = useConfig();
+  const { data: seo } = useSeo();
+  const { data: menus } = useNav();
   useMenuAdmin();
   const { slug } = useParams<{ slug: string }>();
   const [activeIndex, setActiveIndex] = useState<number>(
@@ -49,24 +39,17 @@ const useMenu = () => {
     [activeIndex]
   );
 
+  const title = useMemo(() => seo?.title, [seo]);
+
   useEffect(() => {
     setOpenMenuResponsive(false);
     setActiveIndex(initActiveIndex(slug, menus));
   }, [slug]);
 
-  if (liveShare && !stylesheetIsListening) {
-    listenStylesheet();
-  }
-
-  if (liveShare && !menusIsListening && loadingMenus === false) {
-    listenMenus();
-  }
-
   return {
     icon,
-    seo,
+    title,
     menus,
-    loadingMenus,
     activeIndex,
     slug,
     openMenuResponsive,

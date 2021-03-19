@@ -1,14 +1,14 @@
 import * as firebase from "firebase/app";
 import "firebase/database";
 import { getLocale } from "../..";
-import { SEO } from "../../../types";
+import { DriverSeo, SEO } from "../../../types";
 
 const defaultFirebase = firebase.default;
 const database = defaultFirebase.database();
 
 const databaseError = "Firebase::: Error database connection";
 
-const useSeo = () => {
+const useSeo = (): DriverSeo => {
   const locale = getLocale();
   const insertSeo = (data: SEO): Promise<SEO> =>
     new Promise((resolve, reject) => {

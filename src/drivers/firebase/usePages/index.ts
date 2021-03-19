@@ -1,14 +1,14 @@
 import * as firebase from "firebase/app";
 import "firebase/database";
 import { getLocale } from "../..";
-import { Page } from "../../../types";
+import { DriverPages, Page } from "../../../types";
 
 const defaultFirebase = firebase.default;
 const database = defaultFirebase.database();
 
 const databaseError = "Firebase::: Error database connection";
 
-const usePages = () => {
+const usePages = (): DriverPages => {
   const locale = getLocale();
   const getPages = (): Promise<Page[]> =>
     new Promise((resolve, reject) => {
@@ -25,6 +25,16 @@ const usePages = () => {
         })
         .catch(() => reject(new Error(databaseError)));
     });
+
+  const listenPages = (callback: (pages: Page[]) => void) => {
+    const table = database.ref(`${locale}/pages`);
+    table.on("value", (snapshot) => {
+      const val = snapshot.val();
+      if (val) {
+        callback(val);
+      }
+    });
+  };
 
   const getPage = (id: Page["id"]): Promise<Page> =>
     new Promise((resolve, reject) => {
@@ -111,6 +121,7 @@ const usePages = () => {
 
   return {
     getPages,
+    listenPages,
     getPage,
     getPageBySlug,
     listenPageBySlug,

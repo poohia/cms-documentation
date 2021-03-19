@@ -1,4 +1,4 @@
-import { SEO } from "../../../types";
+import { DriverSeo, SEO } from "../../../types";
 
 let seo: SEO = {
   title: "",
@@ -10,7 +10,7 @@ let seo: SEO = {
   },
 };
 
-const useSeo = () => {
+const useSeo = (): DriverSeo => {
   const insertSeo = (data: SEO): Promise<SEO> =>
     new Promise((resolve, _reject) => {
       seo = data;
