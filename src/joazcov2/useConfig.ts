@@ -24,6 +24,7 @@ export type UseConfigRest = {
   driver: "firebase" | "localstorage" | "test" | string;
   env: "production" | "development" | "test";
   enableFixtures: boolean;
+  enableCache: boolean;
   icon?: string;
 };
 
@@ -52,8 +53,18 @@ const useConfig = (): UseConfigRest => {
     }
     return false;
   }, []);
+  const enableCache = useMemo(() => {
+    const envEnableCache = process.env.REACT_APP_JOAZCO_ENABLE_CACHE;
+    if (!envEnableCache || envEnableCache === "false") {
+      return false;
+    }
+    if (envEnableCache === "true") {
+      return true;
+    }
+    return false;
+  }, []);
 
-  return { driver, icon, env, enableFixtures };
+  return { driver, icon, env, enableFixtures, enableCache };
 };
 
 export default useConfig;

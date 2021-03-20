@@ -12,9 +12,9 @@ import {
 } from "./styles";
 
 const Page = () => {
-  const { loading, page, previousPage, nextPage } = usePage();
+  const { page, previousPage, nextPage } = usePage();
 
-  if (loading || !page) {
+  if (!page) {
     return <Loader />;
   }
   /* eslint-disable react/no-danger */
