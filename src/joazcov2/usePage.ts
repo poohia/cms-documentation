@@ -10,30 +10,29 @@ const joazcoError = "Joazco::: Page service error";
 const usePage = ({ id, slug }: { id?: string; slug?: string }) => {
   const { locale } = useLanguages();
   const { enableCache } = useConfig();
-  const tableCache = useMemo(() => `page.${id || slug}.${locale}`, [
-    id,
-    slug,
-    locale,
-  ]);
+  const tableCache = useMemo(
+    () => `joazco.cache.page.${id || slug}.${locale}`,
+    [id, slug, locale]
+  );
   const loadCache = useCallback(() => {
     const pageCache: string | null = localStorage.getItem(tableCache);
     if (!pageCache) {
       return undefined;
     }
     return JSON.parse(pageCache) as Page;
-  }, []);
+  }, [tableCache]);
   const setCache = useCallback(
     (page: Page) => localStorage.setItem(tableCache, JSON.stringify(page)),
     [tableCache]
   );
   const [data, setData] = useState<Page | undefined>(loadCache());
   const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | undefined>(undefined);
   const { getQueryUrlVar } = useQueryUrl();
   const liveShare = useMemo(() => getQueryUrlVar("liveChange"), []);
 
   const loadData = useCallback(async () => {
-    setError(null);
+    setError(undefined);
     setLoading(true);
     const { getPage, getPageBySlug, listenPageBySlug } = (
       await import(`../drivers/${driver}/usePages`)

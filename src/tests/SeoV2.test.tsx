@@ -1,6 +1,6 @@
 import { renderHook, act } from "@testing-library/react-hooks";
 import { useConnection } from "../joazco/hooks";
-import useSeo from "../joazcov2/useSeo";
+import { useSeoWithoutHistory as useSeo } from "../joazcov2/useSeo";
 import { SEO } from "../types";
 import driver from "../drivers";
 

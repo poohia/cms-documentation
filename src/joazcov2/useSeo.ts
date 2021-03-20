@@ -1,8 +1,11 @@
 import { useState, useCallback, useMemo, useEffect } from "react";
+import useLanguages from "./useLanguages";
+import useConfig from "./useConfig";
 import { DriverSeo, Links, SEO } from "../types";
 import useQueryUrl from "../useQueryUrl";
 
 const driver = process.env.REACT_APP_JOAZCO_CMS_DRIVER || "error";
+const joazcoError = "Joazco::: Seo service error";
 
 function serializeSeo(value: Partial<SEO>): SEO {
   const { title, description, keywords, links, favIcon } = value;
@@ -40,22 +43,49 @@ export const useSeoWithoutHistory = () => {
 };
 
 const useSeo = () => {
-  const [data, setData] = useState<SEO | undefined>(undefined);
+  const { locale } = useLanguages();
+  const { enableCache } = useConfig();
+  const tableCache = useMemo(() => `joazco.cache.seo.${locale}`, [locale]);
+  const loadCache = useCallback(() => {
+    const seoCache: string | null = localStorage.getItem(tableCache);
+    if (!seoCache) {
+      return undefined;
+    }
+    return JSON.parse(seoCache) as SEO;
+  }, [tableCache]);
+  const setCache = useCallback(
+    (seo: SEO) => localStorage.setItem(tableCache, JSON.stringify(seo)),
+    [tableCache]
+  );
+  const [data, setData] = useState<SEO | undefined>(loadCache());
   const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | undefined>(undefined);
   const { getQueryUrlVar } = useQueryUrl();
   const liveShare = useMemo(() => getQueryUrlVar("liveChange"), []);
 
   const loadData = useCallback(async () => {
+    setError(undefined);
     setLoading(true);
     const { getSeo, listenSeo } = (
       await import(`../drivers/${driver}/useSeo`)
     ).default() as DriverSeo;
-    await getSeo().then((value) => {
-      setData(serializeSeo(value));
-      setLoading(false);
-    });
+    await getSeo()
+      .then((value) => {
+        setData(serializeSeo(value));
+        setLoading(false);
+      })
+      .catch(() => {
+        setError(joazcoError);
+        setLoading(false);
+      });
     if (liveShare) {
-      listenSeo((value) => setData(serializeSeo(value)));
+      listenSeo((value) => {
+        if (value) {
+          setData(serializeSeo(value));
+        } else {
+          setError(joazcoError);
+        }
+      });
     }
   }, []);
 
@@ -63,7 +93,13 @@ const useSeo = () => {
     loadData();
   }, []);
 
-  return { data, loading, loadData };
+  useEffect(() => {
+    if (enableCache && data) {
+      setCache(data);
+    }
+  }, [data]);
+
+  return { data, loading, error, loadData };
 };
 
 export default useSeo;

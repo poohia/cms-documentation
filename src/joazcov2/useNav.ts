@@ -1,9 +1,12 @@
 import { useState, useMemo, useEffect, useCallback } from "react";
+import useLanguages from "./useLanguages";
+import useConfig from "./useConfig";
 import { DriverMenus, Menu, MenuWithoutPage, Page } from "../types";
 import useQueryUrl from "../useQueryUrl";
 import usePages from "./usePages";
 
 const driver = process.env.REACT_APP_JOAZCO_CMS_DRIVER || "error";
+const joazcoError = "Joazco::: Nav service error";
 
 function menuFromMenuWithoutPage(
   menus: MenuWithoutPage[],
@@ -32,25 +35,50 @@ function menuFromMenuWithoutPage(
 }
 
 const useNav = () => {
+  const { locale } = useLanguages();
+  const { enableCache } = useConfig();
+  const tableCache = useMemo(() => `joazco.cache.nav.${locale}`, [locale]);
+  const loadCache = useCallback(() => {
+    const navCache: string | null = localStorage.getItem(tableCache);
+    if (!navCache) {
+      return [];
+    }
+    return JSON.parse(navCache) as Menu[];
+  }, [tableCache]);
+  const setCache = useCallback(
+    (nav: Menu[]) => localStorage.setItem(tableCache, JSON.stringify(nav)),
+    [tableCache]
+  );
   const { loading: loadingPage, data: pages } = usePages();
-  const [data, setData] = useState<Menu[]>([]);
+  const [data, setData] = useState<Menu[]>(loadCache());
   const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | undefined>(undefined);
   const { getQueryUrlVar } = useQueryUrl();
   const liveShare = useMemo(() => getQueryUrlVar("liveChange"), []);
 
   const loadData = useCallback(async () => {
+    setError(undefined);
     setLoading(true);
     const { getMenus, listenMenus } = (
       await import(`../drivers/${driver}/useMenus`)
     ).default() as DriverMenus;
-    await getMenus().then((value) => {
-      setData(menuFromMenuWithoutPage(value, pages));
-      setLoading(false);
-    });
+    await getMenus()
+      .then((value) => {
+        setData(menuFromMenuWithoutPage(value, pages));
+        setLoading(false);
+      })
+      .catch(() => {
+        setError(joazcoError);
+        setLoading(false);
+      });
     if (liveShare) {
-      listenMenus(
-        (value) => value && setData(menuFromMenuWithoutPage(value, []))
-      );
+      listenMenus((value) => {
+        if (value) {
+          setData(menuFromMenuWithoutPage(value, []));
+        } else {
+          setError(joazcoError);
+        }
+      });
     }
   }, [pages]);
 
@@ -60,9 +88,16 @@ const useNav = () => {
     }
   }, [loadingPage]);
 
+  useEffect(() => {
+    if (enableCache && data) {
+      setCache(data);
+    }
+  }, [data]);
+
   return {
     data,
     loading,
+    error,
     loadData,
   };
 };
