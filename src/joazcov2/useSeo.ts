@@ -98,8 +98,7 @@ const useSeo = () => {
           const { insertSeo: insertSeoDriver } = module.default() as DriverSeo;
           insertSeoDriver(seo)
             .then((value) => {
-              setData(value);
-              setLoading(false);
+              loadData();
               resolve(value);
             })
             .catch(() => {

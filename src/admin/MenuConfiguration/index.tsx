@@ -7,7 +7,16 @@ import { MenuConfigurationContent } from "./styles";
 import useMenuConfiguration from "./useMenuConfiguration";
 
 const MenuConfiguration = () => {
-  const { loadingConnection, user, driver, menus } = useMenuConfiguration();
+  const {
+    loadingMenus,
+    loadingConnection,
+    user,
+    driver,
+    menus,
+    handleSubmit,
+    handleUpdateSubmit,
+    removeMenu,
+  } = useMenuConfiguration();
 
   if (loadingConnection) {
     return <Loader />;
@@ -38,13 +47,21 @@ const MenuConfiguration = () => {
       <Grid>
         <Grid.Row columns={1}>
           <Grid.Column>
-            <PopupBtnAppendMenu />
+            <PopupBtnAppendMenu
+              loadingMenus={loadingMenus}
+              handleSubmit={handleSubmit}
+            />
           </Grid.Column>
         </Grid.Row>
         <Grid.Row>
           {menus.map((menu) => (
             <Grid.Column mobile={16} tablet={8} computer={5} key={menu.id}>
-              <PanelMenu menu={menu} />
+              <PanelMenu
+                loading={loadingMenus}
+                menu={menu}
+                removeMenu={removeMenu}
+                handleUpdateSubmit={handleUpdateSubmit}
+              />
             </Grid.Column>
           ))}
         </Grid.Row>

@@ -49,7 +49,7 @@ const useNav = () => {
     (nav: Menu[]) => localStorage.setItem(tableCache, JSON.stringify(nav)),
     [tableCache]
   );
-  const { loading: loadingPage, data: pages } = usePages();
+  const { data: pages } = usePages();
   const [data, setData] = useState<Menu[]>(loadCache());
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | undefined>(undefined);
@@ -80,13 +80,108 @@ const useNav = () => {
         }
       });
     }
-  }, [pages]);
+  }, [pages, data]);
+
+  const createMenu = useCallback(
+    (
+      menuTitle: Menu["title"],
+      menuCaption: Menu["caption"] = "",
+      forceId?: string
+    ): Promise<Menu> =>
+      new Promise((resolve, reject) => {
+        const findMenu = data.find((menu) => menu.title === menuTitle);
+        if (findMenu) {
+          reject(new Error("Joazco::: Menu name already existing "));
+          return;
+        }
+        setError(undefined);
+        setLoading(true);
+        import(`../drivers/${driver}/useMenus`).then((module) => {
+          const {
+            createMenu: createMenuDriver,
+          } = module.default() as DriverMenus;
+          createMenuDriver(menuTitle, menuCaption, forceId)
+            .then((value) => {
+              loadData();
+              resolve({ ...value, pages: [] });
+            })
+            .catch(() => {
+              setError(joazcoError);
+              setLoading(false);
+              reject(new Error(joazcoError));
+            });
+        });
+      }),
+    [data]
+  );
+
+  const updateMenu = useCallback(
+    (
+      menuId: Menu["id"],
+      menuTitle: Menu["title"],
+      menuCaption: Menu["caption"] = ""
+    ): Promise<void> =>
+      new Promise((resolve, reject) => {
+        const findMenu = data.find((menu) => menu.id === menuId);
+        if (!findMenu) {
+          reject(new Error("Joazco::: Menu not fond refresh page"));
+          return;
+        }
+        setError(undefined);
+        setLoading(true);
+        findMenu.title = menuTitle;
+        findMenu.caption = menuCaption;
+        import(`../drivers/${driver}/useMenus`).then((module) => {
+          const {
+            updateMenu: updateMenuDriver,
+          } = module.default() as DriverMenus;
+          updateMenuDriver({
+            ...findMenu,
+            pages: findMenu.pages.map((page) => page.id),
+          })
+            .then(() => {
+              loadData();
+              resolve();
+            })
+            .catch(() => {
+              setError(joazcoError);
+              setLoading(false);
+              reject(new Error(joazcoError));
+            });
+        });
+      }),
+    [data]
+  );
+
+  const removeMenu = useCallback(
+    (id: Menu["id"]): Promise<void> =>
+      new Promise((resolve, reject) => {
+        setError(undefined);
+        setLoading(true);
+        import(`../drivers/${driver}/useMenus`).then((module) => {
+          const {
+            removeMenu: removeMenuDriver,
+          } = module.default() as DriverMenus;
+          removeMenuDriver(id)
+            .then(() => {
+              loadData();
+              resolve();
+            })
+            .catch(() => {
+              setError(joazcoError);
+              setLoading(false);
+              reject(new Error(joazcoError));
+            });
+        });
+      }),
+    [data]
+  );
 
   useEffect(() => {
-    if (!loadingPage) {
+    if (pages) {
       loadData();
     }
-  }, [loadingPage]);
+  }, [pages]);
 
   useEffect(() => {
     if (enableCache && data) {
@@ -99,6 +194,9 @@ const useNav = () => {
     loading,
     error,
     loadData,
+    createMenu,
+    updateMenu,
+    removeMenu,
   };
 };
 

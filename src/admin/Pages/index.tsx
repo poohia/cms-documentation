@@ -9,21 +9,23 @@ import usePages from "./usePages";
 
 const Pages = () => {
   const {
+    loadingPages,
     loadingConnection,
     user,
     pages,
-    loadingPages,
     filter,
+    handleSubmit,
     removePage,
     setFilter,
   } = usePages();
 
-  if (loadingConnection || loadingPages === null) {
+  if (loadingConnection || !pages) {
     return <Loader />;
   }
   if (!user) {
     return <Redirect to="/joazco-connection" />;
   }
+
   return (
     <PagesContent>
       <Header as="h1">
@@ -36,7 +38,10 @@ const Pages = () => {
       <Grid>
         <Grid.Row columns={1}>
           <Grid.Column>
-            <PopupCreatePage />
+            <PopupCreatePage
+              handleSubmit={handleSubmit}
+              loadingPages={loadingPages}
+            />
           </Grid.Column>
         </Grid.Row>
         <Grid.Row columns={1}>

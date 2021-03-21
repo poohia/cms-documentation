@@ -1,39 +1,38 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import usePages from "../Pages/usePages";
-import { useJoazco } from "../../joazco";
+import {
+  useConnection,
+  useConfig,
+  useLanguages,
+  usePage as usePageJoazco,
+} from "../../joazcov2";
 import { Page } from "../../types";
 
 const usePage = () => {
-  const {
-    driver,
-    locale,
-    logged,
-    loadingPages,
-    pages,
-    getPage,
-    updatePage,
-  } = useJoazco();
+  const { driver } = useConfig();
+  const { locale } = useLanguages();
+  const { loading: loadingConnection, data: user } = useConnection();
   const { id } = useParams<{ id: string }>();
-  const [page, setPage] = useState<Page | undefined>(getPage(id));
+  const { loading: loadingPages, data, updatePage } = usePageJoazco({ id });
+  const [page, setPage] = useState<Page | undefined>(data);
   const { createSlug } = usePages();
 
   useEffect(() => {
-    setPage(getPage(id));
-  }, [id, pages]);
+    setPage(data);
+  }, [data]);
 
   return {
+    user,
+    loadingConnection,
     driver,
     locale,
-    logged,
     loadingPages,
-    pages,
     id,
     page,
-    getPage,
-    updatePage,
     setPage,
     createSlug,
+    updatePage,
   };
 };
 

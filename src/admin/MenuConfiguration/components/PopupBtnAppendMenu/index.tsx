@@ -9,12 +9,16 @@ import {
 } from "../../../../styled-components";
 import useMenuConfiguration from "../../useMenuConfiguration";
 
-const PopupBtnAppendMenu = () => {
+const PopupBtnAppendMenu = ({
+  loadingMenus,
+  handleSubmit,
+}: {
+  loadingMenus: boolean;
+  handleSubmit: (title: string, caption: string) => void;
+}) => {
   const {
-    loadingMenus,
     menuTitle,
     menuCaption,
-    handleSubmit,
     setMenuTitle,
     setMenuCaption,
   } = useMenuConfiguration();
@@ -36,7 +40,7 @@ const PopupBtnAppendMenu = () => {
       }
     >
       <Popup.Content>
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={() => handleSubmit(menuTitle, menuCaption)}>
           <PopupRow>
             <Label htmlFor="menuTitle" required>
               <span>Menu name</span>

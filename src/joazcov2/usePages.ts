@@ -54,6 +54,64 @@ const usePages = () => {
     }
   }, []);
 
+  const createPage = useCallback(
+    (title: string, slug: string, id?: string): Promise<Page> =>
+      new Promise((resolve, reject) => {
+        const p: Pick<Page, "title" | "slug" | "content"> = {
+          title,
+          slug,
+          content: "",
+        };
+        const findPage = data && data.find((pt) => pt.slug === slug);
+        if (findPage) {
+          reject(new Error("Joazco::: Slug already existing"));
+          return;
+        }
+        setError(undefined);
+        setLoading(true);
+        import(`../drivers/${driver}/usePages`).then((module) => {
+          const {
+            createPage: createPageDriver,
+          } = module.default() as DriverPages;
+          createPageDriver(p, id)
+            .then((value) => {
+              loadData();
+              resolve(value);
+            })
+            .catch(() => {
+              setError(joazcoError);
+              setLoading(false);
+              reject(new Error(joazcoError));
+            });
+        });
+      }),
+    [data]
+  );
+
+  const removePage = useCallback(
+    (id: Page["id"]): Promise<void> =>
+      new Promise((resolve, reject) => {
+        setError(undefined);
+        setLoading(true);
+        import(`../drivers/${driver}/usePages`).then((module) => {
+          const {
+            removePage: removePageDriver,
+          } = module.default() as DriverPages;
+          removePageDriver(id)
+            .then(() => {
+              loadData();
+              resolve();
+            })
+            .catch(() => {
+              setError(joazcoError);
+              setLoading(false);
+              reject(new Error(joazcoError));
+            });
+        });
+      }),
+    []
+  );
+
   useEffect(() => {
     loadData();
   }, []);
@@ -69,6 +127,8 @@ const usePages = () => {
     loading,
     error,
     loadData,
+    createPage,
+    removePage,
   };
 };
 

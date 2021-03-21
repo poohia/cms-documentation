@@ -11,9 +11,10 @@ import "suneditor/dist/css/suneditor.min.css"; // Import Sun Editor's CSS File
 
 const Page = () => {
   const {
+    user,
+    loadingConnection,
     driver,
     locale,
-    logged,
     loadingPages,
     id,
     page,
@@ -22,10 +23,10 @@ const Page = () => {
     createSlug,
   } = usePage();
 
-  if (logged === null || loadingPages === null) {
+  if (loadingConnection || !page) {
     return <Loader />;
   }
-  if (!logged) {
+  if (!user) {
     return <Redirect to="/joazco-connection" />;
   }
 
@@ -60,9 +61,7 @@ const Page = () => {
           </p>
           <Form
             onSubmit={() => {
-              updatePage(page)
-                .then((value) => setPage(value))
-                .catch((reason) => window.alert(reason));
+              updatePage(page).catch((reason) => window.alert(reason));
             }}
           >
             <Form.Field>
@@ -103,7 +102,14 @@ const Page = () => {
                     imageFileInput: false,
                     imageUrlInput: true,
                     buttonList: [
-                      ["undo", "redo", "formatBlock", "font", "fontSize"],
+                      [
+                        "save",
+                        "undo",
+                        "redo",
+                        "formatBlock",
+                        "font",
+                        "fontSize",
+                      ],
                       ["bold", "underline", "italic", "strike", "removeFormat"],
                       [
                         "fontColor",
@@ -124,6 +130,12 @@ const Page = () => {
                         "codeView",
                       ],
                     ],
+                    callBackSave: (content) => {
+                      updatePage({ ...page, content }).catch((reason) =>
+                        window.alert(reason)
+                      );
+                      setPage({ ...page, content });
+                    },
                   }}
                 />
               </Label>

@@ -1,5 +1,4 @@
 import { useState, useCallback } from "react";
-import { useJoazco } from "../../joazco";
 import { useConnection, usePages as usePagesJoazco } from "../../joazcov2";
 
 const usePages = () => {
@@ -8,8 +7,12 @@ const usePages = () => {
   const [title, setTitle] = useState<string>("");
   const [slug, setSlug] = useState<string>("");
   const { loading: loadingConnection, data: user } = useConnection();
-  const { loading: loadingPages, data: pages } = usePagesJoazco();
-  const { createPage, removePage } = useJoazco();
+  const {
+    loading: loadingPages,
+    data: pages,
+    createPage,
+    removePage,
+  } = usePagesJoazco();
 
   const createSlug = useCallback((text: string): string => {
     let finalText = text;
@@ -39,16 +42,19 @@ const usePages = () => {
     return to === text;
   }, []);
 
-  const handleSubmit = useCallback(() => {
-    if (title !== "" && slug !== "" && isSlug(slug)) {
-      createPage(title, slug)
-        .then(() => {
-          setTitle("");
-          setSlug("");
-        })
-        .catch((reason) => window.alert(reason));
-    }
-  }, [title, slug]);
+  const handleSubmit = useCallback(
+    (t: string, s: string) => {
+      if (t !== "" && s !== "" && isSlug(s)) {
+        createPage(t, s)
+          .then(() => {
+            setTitle("");
+            setSlug("");
+          })
+          .catch((reason) => window.alert(reason));
+      }
+    },
+    [pages]
+  );
 
   return {
     loadingConnection,

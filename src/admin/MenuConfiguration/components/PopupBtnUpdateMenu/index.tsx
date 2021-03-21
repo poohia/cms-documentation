@@ -11,15 +11,17 @@ import {
 import { PopupBtnUpdateMenuProps } from "../../types";
 import useMenuConfiguration from "../../useMenuConfiguration";
 
-const PopupBtnUpdateMenu = ({ menu }: PopupBtnUpdateMenuProps) => {
+const PopupBtnUpdateMenu = ({
+  loading,
+  menu,
+  handleUpdateSubmit,
+}: PopupBtnUpdateMenuProps) => {
   const {
-    loadingMenus,
     pages,
     menus,
     menuTitle,
     menuCaption,
     filter,
-    handleUpdateSubmit,
     addPageFromMenu,
     setMenuTitle,
     setMenuCaption,
@@ -34,7 +36,9 @@ const PopupBtnUpdateMenu = ({ menu }: PopupBtnUpdateMenuProps) => {
       size="large"
     >
       <Popup.Content>
-        <Form onSubmit={handleUpdateSubmit}>
+        <Form
+          onSubmit={() => handleUpdateSubmit(menu.id, menuTitle, menuCaption)}
+        >
           <PopupRow>
             <Label htmlFor="menuTitle" required>
               <span>Menu name</span>
@@ -60,12 +64,7 @@ const PopupBtnUpdateMenu = ({ menu }: PopupBtnUpdateMenuProps) => {
             </Label>
           </PopupRow>
           <PopupRow>
-            <ButtonSuccess
-              fluid
-              size="small"
-              loading={loadingMenus}
-              type="submit"
-            >
+            <ButtonSuccess fluid size="small" loading={loading} type="submit">
               <Icon name="pencil" />
               &nbsp;Update Menu
             </ButtonSuccess>

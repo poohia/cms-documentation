@@ -70,6 +70,30 @@ const usePage = ({ id, slug }: { id?: string; slug?: string }) => {
     }
   }, [id, slug]);
 
+  const updatePage = useCallback(
+    (page: Page, forceId?: string): Promise<Page> =>
+      new Promise((resolve, reject) => {
+        setError(undefined);
+        setLoading(true);
+        import(`../drivers/${driver}/usePages`).then((module) => {
+          const {
+            updatePage: updatePageDriver,
+          } = module.default() as DriverPages;
+          updatePageDriver(page, forceId)
+            .then((value) => {
+              loadData();
+              resolve(value);
+            })
+            .catch(() => {
+              setError(joazcoError);
+              setLoading(false);
+              reject(new Error(joazcoError));
+            });
+        });
+      }),
+    [data]
+  );
+
   useEffect(() => {
     loadData();
   }, [id, slug]);
@@ -85,6 +109,7 @@ const usePage = ({ id, slug }: { id?: string; slug?: string }) => {
     loading,
     error,
     loadData,
+    updatePage,
   };
 };
 

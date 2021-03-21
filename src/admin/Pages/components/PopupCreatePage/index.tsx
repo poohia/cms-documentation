@@ -9,16 +9,14 @@ import {
   Button,
 } from "../../../../styled-components";
 
-const PopupCreatePage = () => {
-  const {
-    title,
-    slug,
-    loadingPages,
-    handleSubmit,
-    setTitle,
-    setSlug,
-    createSlug,
-  } = usePages();
+const PopupCreatePage = ({
+  loadingPages,
+  handleSubmit,
+}: {
+  loadingPages: boolean;
+  handleSubmit: (title: string, slug: string) => void;
+}) => {
+  const { title, slug, setTitle, setSlug, createSlug } = usePages();
 
   return (
     <Popup
@@ -37,7 +35,7 @@ const PopupCreatePage = () => {
       }
     >
       <Popup.Content>
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={() => handleSubmit(title, slug)}>
           <PopupRow>
             <Label required htmlFor="pageName">
               <span>Page name</span>

@@ -5,8 +5,13 @@ import { Panel } from "../../../../styled-components";
 import { PanelMenuProps } from "../../types";
 import PopupBtnUpdateMenu from "../PopupBtnUpdateMenu";
 
-const PanelMenu = ({ menu }: PanelMenuProps) => {
-  const { removeMenu, removePageFromMenu } = useJoazco();
+const PanelMenu = ({
+  loading,
+  menu,
+  removeMenu,
+  handleUpdateSubmit,
+}: PanelMenuProps) => {
+  const { removePageFromMenu } = useJoazco();
 
   return (
     <Panel.PanelContainer>
@@ -29,7 +34,11 @@ const PanelMenu = ({ menu }: PanelMenuProps) => {
               }
             }}
           />
-          <PopupBtnUpdateMenu menu={menu} />
+          <PopupBtnUpdateMenu
+            loading={loading}
+            menu={menu}
+            handleUpdateSubmit={handleUpdateSubmit}
+          />
         </Panel.PanelIcons>
       </Panel.PanelHeader>
       <Panel.PanelContent>
