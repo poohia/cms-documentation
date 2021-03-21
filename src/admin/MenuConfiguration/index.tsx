@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import { Grid, Header, Icon } from "semantic-ui-react";
 import Loader from "../Loader";
 import { PopupBtnAppendMenu, PanelMenu } from "./components";
@@ -7,11 +7,16 @@ import { MenuConfigurationContent } from "./styles";
 import useMenuConfiguration from "./useMenuConfiguration";
 
 const MenuConfiguration = () => {
-  const { driver, logged, loadingPages, menus } = useMenuConfiguration();
+  const { loadingConnection, user, driver, menus } = useMenuConfiguration();
 
-  if (logged === null || loadingPages === null) {
+  if (loadingConnection) {
     return <Loader />;
   }
+
+  if (!user) {
+    return <Redirect to="/joazco-connection" />;
+  }
+
   return (
     <MenuConfigurationContent>
       <Header as="h1">

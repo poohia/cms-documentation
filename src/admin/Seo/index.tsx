@@ -4,12 +4,13 @@ import { Header, Dropdown, Input, Icon } from "semantic-ui-react";
 import { ButtonSuccess, Form, FormInput, Label } from "../../styled-components";
 import Loader from "../Loader";
 import { HomeContent, HomeFiveIcon, HomeIcon } from "./styles";
-import useHome from "./useHome";
+import useSeo from "./useSeo";
 
-const Home = () => {
+const Seo = () => {
   const {
+    loadingConnection,
+    user,
     driver,
-    logged,
     icon,
     loadingSeo,
     seo: { title, description, keywords, links, favIcon },
@@ -20,11 +21,12 @@ const Home = () => {
     setWebSite,
     setgit,
     setFavIcon,
-  } = useHome();
-  if (logged === null || loadingSeo === null) {
+  } = useSeo();
+  if (loadingConnection || loadingSeo === null) {
     return <Loader />;
   }
-  if (!logged) {
+
+  if (!user) {
     return <Redirect to="/joazco-connection" />;
   }
 
@@ -161,4 +163,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Seo;

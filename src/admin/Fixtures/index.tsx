@@ -1,16 +1,27 @@
 import React from "react";
+import { Redirect } from "react-router-dom";
 import { Button } from "semantic-ui-react";
 import { AdminContainer } from "../../styles";
+import Loader from "../Loader";
 import useFixtures from "./useFixtures";
 
 const Fixtures = () => {
   const {
+    loadingConnection,
+    user,
     loading,
     menusJoazco,
     loadFixutres,
     configMenus,
     resetDatabase,
   } = useFixtures();
+  if (loadingConnection) {
+    return <Loader />;
+  }
+  if (!user) {
+    return <Redirect to="/joazco-connection" />;
+  }
+
   return (
     <AdminContainer>
       <Button

@@ -1,10 +1,10 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { useJoazco } from "../../../../../joazco";
+import { useNav } from "../../../../../joazcov2";
 import { Card } from "../../../../../styled-components";
 
 const MenusCardGroup = () => {
-  const { menus } = useJoazco();
+  const { data: menus } = useNav();
   const { push } = useHistory();
 
   return (

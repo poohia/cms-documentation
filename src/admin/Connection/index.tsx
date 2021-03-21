@@ -1,19 +1,15 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
-import { useJoazco } from "../../joazco";
+import { useConnection as useConnectionJoazco } from "../../joazcov2";
 import { Loader, SignInForm } from "./components";
 
 const Connection = () => {
-  const { logged, getCurrentUser, signIn } = useJoazco();
+  const { loading, data: user, signIn } = useConnectionJoazco();
 
-  if (logged === null) {
-    getCurrentUser();
-  }
-
-  if (logged === null) {
+  if (loading) {
     return <Loader />;
   }
-  if (logged) {
+  if (user) {
     return <Redirect to="/joazco-admin" />;
   }
   return (

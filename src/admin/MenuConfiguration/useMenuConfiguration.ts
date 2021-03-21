@@ -1,14 +1,12 @@
 import { useState, useCallback } from "react";
 import { useJoazco } from "../../joazco";
+import { useConnection, useNav } from "../../joazcov2";
 import { Menu } from "../../types";
 
 const useMenuConfiguration = (menu?: Menu) => {
   const {
     driver,
-    logged,
     loadingMenus,
-    loadingPages,
-    menus,
     pages,
     createMenu,
     updateMenu,
@@ -16,6 +14,8 @@ const useMenuConfiguration = (menu?: Menu) => {
     removePageFromMenu,
     addPageFromMenu,
   } = useJoazco();
+  const { loading: loadingConnection, data: user } = useConnection();
+  const { data: menus } = useNav();
   const [menuTitle, setMenuTitle] = useState<string>(menu ? menu.title : "");
   const [menuCaption, setMenuCaption] = useState<string>(
     menu ? menu.caption || "" : ""
@@ -42,9 +42,9 @@ const useMenuConfiguration = (menu?: Menu) => {
   }, [menuTitle, menuCaption]);
 
   return {
+    loadingConnection,
+    user,
     driver,
-    logged,
-    loadingPages,
     loadingMenus,
     menus,
     pages,

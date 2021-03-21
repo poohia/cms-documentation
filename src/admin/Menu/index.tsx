@@ -16,13 +16,7 @@ import Props from "./types";
 import DropdownLanguages from "./components/DropdownLanguages";
 
 const Menu = ({ activeItem }: Props) => {
-  const {
-    driver,
-    icon,
-    seo: { title },
-    enableFixtures,
-    signOut,
-  } = useMenu();
+  const { driver, icon, title, enableFixtures, signOut, push } = useMenu();
   return (
     <>
       <MenuContent>
@@ -38,7 +32,10 @@ const Menu = ({ activeItem }: Props) => {
             </MenuListItem>
             <DropdownLanguages />
             <MenuListItem center>
-              <MenuBtnSignOut onClick={() => signOut()} type="button">
+              <MenuBtnSignOut
+                onClick={() => signOut().then(() => push("/joazco-connection"))}
+                type="button"
+              >
                 <Icon name="sign-out" />
                 Deconnection
               </MenuBtnSignOut>

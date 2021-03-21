@@ -89,6 +89,29 @@ const useSeo = () => {
     }
   }, []);
 
+  const insertSeo = useCallback(
+    (seo: SEO): Promise<SEO> =>
+      new Promise((resolve, reject) => {
+        setError(undefined);
+        setLoading(true);
+        import(`../drivers/${driver}/useSeo`).then((module) => {
+          const { insertSeo: insertSeoDriver } = module.default() as DriverSeo;
+          insertSeoDriver(seo)
+            .then((value) => {
+              setData(value);
+              setLoading(false);
+              resolve(value);
+            })
+            .catch(() => {
+              setError(joazcoError);
+              setLoading(false);
+              reject(new Error(joazcoError));
+            });
+        });
+      }),
+    []
+  );
+
   useEffect(() => {
     loadData();
   }, []);
@@ -99,7 +122,7 @@ const useSeo = () => {
     }
   }, [data]);
 
-  return { data, loading, error, loadData };
+  return { data, loading, error, loadData, insertSeo };
 };
 
 export default useSeo;

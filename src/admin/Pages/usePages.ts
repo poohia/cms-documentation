@@ -1,12 +1,15 @@
 import { useState, useCallback } from "react";
 import { useJoazco } from "../../joazco";
+import { useConnection, usePages as usePagesJoazco } from "../../joazcov2";
 
 const usePages = () => {
   const [openModalCreate, setOpenCreateModal] = useState<boolean>(false);
   const [filter, setFilter] = useState<string>("");
   const [title, setTitle] = useState<string>("");
   const [slug, setSlug] = useState<string>("");
-  const { logged, pages, loadingPages, createPage, removePage } = useJoazco();
+  const { loading: loadingConnection, data: user } = useConnection();
+  const { loading: loadingPages, data: pages } = usePagesJoazco();
+  const { createPage, removePage } = useJoazco();
 
   const createSlug = useCallback((text: string): string => {
     let finalText = text;
@@ -48,7 +51,8 @@ const usePages = () => {
   }, [title, slug]);
 
   return {
-    logged,
+    loadingConnection,
+    user,
     pages,
     openModalCreate,
     loadingPages,

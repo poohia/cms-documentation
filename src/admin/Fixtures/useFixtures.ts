@@ -1,5 +1,6 @@
 import { useState, useCallback } from "react";
 import { useJoazco } from "../../joazco";
+import { useConnection } from "../../joazcov2";
 import { MenuWithoutPage, Page, SEO } from "../../types";
 
 const seo: SEO = {
@@ -97,6 +98,7 @@ const useFixtures = () => {
     removeMenu,
     removePage,
   } = useJoazco();
+  const { loading: loadingConnection, data: user } = useConnection();
   const [loading, setLoading] = useState<boolean>(false);
 
   const resetDatabase = useCallback(() => {
@@ -160,7 +162,15 @@ const useFixtures = () => {
     setTimeout(() => window.location.reload(), menus.length * 200 + 200);
   }, [menusJoazco]);
 
-  return { menusJoazco, loading, loadFixutres, configMenus, resetDatabase };
+  return {
+    loadingConnection,
+    user,
+    menusJoazco,
+    loading,
+    loadFixutres,
+    configMenus,
+    resetDatabase,
+  };
 };
 
 export default useFixtures;

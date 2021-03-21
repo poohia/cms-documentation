@@ -1,17 +1,29 @@
-import { useState, useEffect } from "react";
-import { useJoazco } from "../../joazco";
+import { useState } from "react";
 import { SEO } from "../../types";
+import {
+  useConfig,
+  useConnection,
+  useSeo as useSeoJoazco,
+} from "../../joazcov2";
 
-const useHome = () => {
-  const {
-    driver,
-    logged,
-    loadingSeo,
-    icon,
-    seo: seoJoazco,
-    insertSeo,
-  } = useJoazco();
-  const [seo, setSeo] = useState<SEO>(seoJoazco);
+const useSeo = () => {
+  const { driver, icon } = useConfig();
+  const { loading: loadingConnection, data: user } = useConnection();
+  const { loading: loadingSeo, data: seoJoazco, insertSeo } = useSeoJoazco();
+
+  const [seo, setSeo] = useState<SEO>(
+    seoJoazco ||
+      ({
+        title: "",
+        description: "",
+        keywords: "",
+        links: {
+          website: "",
+          git: "",
+        },
+        favIcon: "",
+      } as SEO)
+  );
 
   const setTitle = (title: string) => {
     setSeo({ ...seo, title });
@@ -41,13 +53,10 @@ const useHome = () => {
     insertSeo(seo);
   };
 
-  useEffect(() => {
-    setSeo(seoJoazco);
-  }, [seoJoazco]);
-
   return {
+    loadingConnection,
+    user,
     driver,
-    logged,
     icon,
     loadingSeo,
     seo,
@@ -61,4 +70,4 @@ const useHome = () => {
   };
 };
 
-export default useHome;
+export default useSeo;

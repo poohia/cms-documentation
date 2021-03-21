@@ -74,7 +74,7 @@ const useNav = () => {
     if (liveShare) {
       listenMenus((value) => {
         if (value) {
-          setData(menuFromMenuWithoutPage(value, []));
+          setData(menuFromMenuWithoutPage(value, pages));
         } else {
           setError(joazcoError);
         }

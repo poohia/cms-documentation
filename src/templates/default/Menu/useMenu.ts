@@ -1,7 +1,6 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
 import { useParams } from "react-router-dom";
 import { useConfig, useNav, useSeo } from "../../../joazcov2";
-import useMenuAdmin from "../../../admin/Menu/useMenu";
 import { Menu } from "../../../types";
 
 function initActiveIndex(slug: string, menus: Menu[]): number {
@@ -22,7 +21,6 @@ const useMenu = () => {
   const { icon } = useConfig();
   const { data: seo } = useSeo();
   const { data: menus } = useNav();
-  useMenuAdmin();
   const { slug } = useParams<{ slug: string }>();
   const [activeIndex, setActiveIndex] = useState<number>(
     initActiveIndex(slug, menus)

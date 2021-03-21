@@ -8,8 +8,9 @@ import { StylesheetContent } from "./styles";
 
 const Stylesheet = () => {
   const {
+    loadingConnection,
+    user,
     driver,
-    logged,
     loadingStylesheet,
     css,
     checkCss,
@@ -18,10 +19,11 @@ const Stylesheet = () => {
     insertStylesheet,
   } = useStylesheet();
 
-  if (logged === null || loadingStylesheet === null) {
+  if (loadingConnection) {
     return <Loader />;
   }
-  if (!logged) {
+
+  if (!user) {
     return <Redirect to="/joazco-connection" />;
   }
 

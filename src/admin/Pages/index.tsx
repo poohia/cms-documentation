@@ -9,7 +9,8 @@ import usePages from "./usePages";
 
 const Pages = () => {
   const {
-    logged,
+    loadingConnection,
+    user,
     pages,
     loadingPages,
     filter,
@@ -17,10 +18,10 @@ const Pages = () => {
     setFilter,
   } = usePages();
 
-  if (logged === null || loadingPages === null) {
+  if (loadingConnection || loadingPages === null) {
     return <Loader />;
   }
-  if (!logged) {
+  if (!user) {
     return <Redirect to="/joazco-connection" />;
   }
   return (
