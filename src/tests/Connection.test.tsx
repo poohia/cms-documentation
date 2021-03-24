@@ -6,34 +6,33 @@ import {
   waitFor,
 } from "@testing-library/react";
 import driver from "../drivers";
-import { useConnection } from "../joazco/hooks";
-import JoazcoProvider from "../joazco";
+import { useConnection } from "../joazco/";
 import Connection from "../admin/Connection";
 
 const email = process.env.REACT_APP_JOAZCO_USER_TEST_USERNAME || "";
 const password = process.env.REACT_APP_JOAZCO_USER_TEST_PASSWORD || "";
 
-test("test signIn", async () => {
-  const { result } = renderHook(() => useConnection(driver));
+test("stay signIn", async () => {
+  const { result } = renderHook(() => useConnection());
   const { signIn } = result.current;
 
   await act(async () => {
     await signIn(email, password);
   });
 
-  const { logged } = result.current;
-  expect(logged).toBeTruthy();
+  const { data: user } = result.current;
+  expect(user).toEqual(expect.objectContaining({ email }));
 });
 
 test("test getCurrentUser", async () => {
-  const { result } = renderHook(() => useConnection(driver));
-  const { getCurrentUser } = result.current;
+  const { result } = renderHook(() => useConnection());
+  const { loadData } = result.current;
 
   await act(async () => {
-    await getCurrentUser();
+    await loadData();
   });
 
-  const { user } = result.current;
+  const { data: user } = result.current;
   expect(user && user.email).toStrictEqual(email);
 });
 
@@ -64,13 +63,12 @@ test("test getCurrentUser", async () => {
 // });
 
 test("test signOut", async () => {
-  const { result } = renderHook(() => useConnection(driver));
+  const { result } = renderHook(() => useConnection());
   const { signOut } = result.current;
 
   await act(async () => {
-    await signOut();
+    await signOut()
+      .then(() => expect(true).toBeTruthy())
+      .catch(() => expect(false).toBeTruthy());
   });
-
-  const { logged } = result.current;
-  expect(logged).toBeFalsy();
 });

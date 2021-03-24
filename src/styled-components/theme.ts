@@ -10,10 +10,11 @@ type Theme = DefaultTheme & {
   backgroundBody: string;
   fontSize: string;
   backgroundColorMenu: string;
+  linkColor: string;
 };
 
 export const defaultTheme: Theme = {
-  primary: process.env.REACT_APP_JOAZCO_PRIMARY_COLOR || "#3867d6",
+  primary: process.env.REACT_APP_JOAZCO_PRIMARY_COLOR || "#34495e",
   secondary: process.env.REACT_APP_JOAZCO_SECONDARY_COLOR || "#f8c471",
   success: process.env.REACT_APP_JOAZCO_SUCCESS_COLOR || "#2dd36f",
   warning: process.env.REACT_APP_JOAZCO_WARNING_COLOR || "#ffc409",
@@ -23,6 +24,7 @@ export const defaultTheme: Theme = {
   backgroundColorMenu:
     process.env.REACT_APP_JOAZCO_BACKGROUND_COLOR_MENU || "#f8c471",
   fontSize: process.env.REACT_APP_JOAZCO_FONT_SIZE || "18px",
+  linkColor: process.env.REACT_APP_JOAZCO_LINK_COLOR || "#3867d6",
 };
 
 export const GlobalStyle = createGlobalStyle<{ theme: Theme }>`
@@ -43,6 +45,12 @@ export const GlobalStyle = createGlobalStyle<{ theme: Theme }>`
     height: 100vh;   
     background-color: ${defaultTheme.backgroundBody};
     color: ${defaultTheme.black};
+  }
+  a{
+    color: ${defaultTheme.linkColor};
+  }
+  figure{
+    padding-bottom: 0 !important;
   }
   pre {
     display: block;

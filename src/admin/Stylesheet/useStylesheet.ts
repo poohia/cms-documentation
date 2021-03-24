@@ -1,16 +1,19 @@
 import { useState, useEffect } from "react";
 import * as cssValidator from "w3c-css-validator";
-import { useJoazco } from "../../joazco";
-import { useConnection } from "../../joazcov2";
+import {
+  useConnection,
+  useConfig,
+  useStylesheet as useStylesheetJoazco,
+} from "../../joazco";
 
 const useStylesheet = () => {
-  const {
-    driver,
-    loadingStylesheet,
-    stylesheet,
-    insertStylesheet,
-  } = useJoazco();
+  const { driver } = useConfig();
   const { loading: loadingConnection, data: user } = useConnection();
+  const {
+    loading: loadingStylesheet,
+    data: stylesheet,
+    insertStylesheet,
+  } = useStylesheetJoazco();
   const [css, setCss] = useState<string>("");
   const [checkCss, setCheckCss] = useState<string>("");
   const [canSave, setCanSave] = useState<boolean>(false);
@@ -33,7 +36,9 @@ const useStylesheet = () => {
   }, [css]);
 
   useEffect(() => {
-    setCss(stylesheet);
+    if (stylesheet) {
+      setCss(stylesheet);
+    }
   }, [stylesheet]);
 
   return {

@@ -1,11 +1,8 @@
 import React, { Suspense, lazy, useMemo } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import { useJoazco } from "./joazco";
 import { SuspenseContent } from "./styles";
-import useConfig from "./joazcov2/useConfig";
-import { useSeoWithoutHistory as useSeo } from "./joazcov2/useSeo";
-import useLanguages from "./joazcov2/useLanguages";
+import { useLanguages, useStylesheet, useConfig, useSeo } from "./joazco";
 
 const template: string = process.env.REACT_APP_JOAZCO_TEMPLATE || "default";
 
@@ -23,9 +20,9 @@ const Page = lazy(() => import(`./templates/${template}/Page`));
 const NotFound = lazy(() => import(`./templates/${template}/NotFound`));
 
 function App() {
-  const { enableFixtures, stylesheet } = useJoazco();
+  const { data: stylesheet } = useStylesheet();
 
-  const { icon } = useConfig();
+  const { icon, enableFixtures } = useConfig();
   const { locale } = useLanguages();
   const { data: seo } = useSeo();
 

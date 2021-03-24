@@ -1,6 +1,6 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
-import { useConnection as useConnectionJoazco } from "../../joazcov2";
+import { useConnection as useConnectionJoazco } from "../../joazco";
 import { Loader, SignInForm } from "./components";
 
 const Connection = () => {

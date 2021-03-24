@@ -1,5 +1,5 @@
 import React from "react";
-import { Icon, Input, Form } from "semantic-ui-react";
+import { Icon, Input, Form, Grid } from "semantic-ui-react";
 import {
   Popup,
   PopupRow,
@@ -14,15 +14,15 @@ import useMenuConfiguration from "../../useMenuConfiguration";
 const PopupBtnUpdateMenu = ({
   loading,
   menu,
+  menus,
+  pages,
   handleUpdateSubmit,
+  addPageToMenu,
 }: PopupBtnUpdateMenuProps) => {
   const {
-    pages,
-    menus,
     menuTitle,
     menuCaption,
     filter,
-    addPageFromMenu,
     setMenuTitle,
     setMenuCaption,
     setFilter,
@@ -32,36 +32,44 @@ const PopupBtnUpdateMenu = ({
     <Popup
       trigger={<Icon name="pencil" color="blue" bordered size="small" link />}
       on="click"
-      position="bottom center"
-      size="large"
+      flowing
+      position="bottom left"
     >
       <Popup.Content>
         <Form
           onSubmit={() => handleUpdateSubmit(menu.id, menuTitle, menuCaption)}
         >
           <PopupRow>
-            <Label htmlFor="menuTitle" required>
-              <span>Menu name</span>
-              <Input
-                type="text"
-                id="menuTitle"
-                value={menuTitle}
-                placeholder="Getting Started"
-                onChange={(e) => setMenuTitle(e.target.value)}
-              />
-            </Label>
-          </PopupRow>
-          <PopupRow>
-            <Label htmlFor="menuCaption">
-              <span>Caption</span>
-              <Input
-                type="text"
-                id="menuCaption"
-                value={menuCaption}
-                placeholder="Set up your environment and start building."
-                onChange={(e) => setMenuCaption(e.target.value)}
-              />
-            </Label>
+            <Grid>
+              <Grid.Row columns={1}>
+                <Grid.Column>
+                  <Label htmlFor="menuTitle" required>
+                    <span>Menu name</span>
+                    <Input
+                      type="text"
+                      id="menuTitle"
+                      value={menuTitle}
+                      placeholder="Getting Started"
+                      onChange={(e) => setMenuTitle(e.target.value)}
+                      fluid
+                    />
+                  </Label>
+                </Grid.Column>
+                <Grid.Column>
+                  <Label htmlFor="menuCaption">
+                    <span>Caption</span>
+                    <Input
+                      type="text"
+                      id="menuCaption"
+                      value={menuCaption}
+                      placeholder="Set up your environment and start building."
+                      onChange={(e) => setMenuCaption(e.target.value)}
+                      fluid
+                    />
+                  </Label>
+                </Grid.Column>
+              </Grid.Row>
+            </Grid>
           </PopupRow>
           <PopupRow>
             <ButtonSuccess fluid size="small" loading={loading} type="submit">
@@ -113,7 +121,7 @@ const PopupBtnUpdateMenu = ({
                     <Icon
                       link
                       name="add"
-                      onClick={() => addPageFromMenu(menu.id, page.id)}
+                      onClick={() => addPageToMenu(menu.id, page.id)}
                     />
                   </div>
                 ))}

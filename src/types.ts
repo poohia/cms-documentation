@@ -30,6 +30,7 @@ export type Menu = {
 export type MenuWithoutPage = Omit<Menu, "pages"> & {
   pages: string[];
 };
+export type LiveShare = string | boolean | null | undefined;
 export interface DriverConnection {
   onceCheckLogged: () => Promise<User>;
   signIn: (email: string, password: string) => Promise<User>;

@@ -1,6 +1,6 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { useNav } from "../../../../../joazcov2";
+import { useNav } from "../../../../../joazco";
 import { Card } from "../../../../../styled-components";
 
 const MenusCardGroup = () => {

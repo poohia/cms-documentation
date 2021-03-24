@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { LetterByLetterProps } from "../../types";
 
 const useLetterByLetter = ({ text }: LetterByLetterProps) => {
@@ -10,6 +10,10 @@ const useLetterByLetter = ({ text }: LetterByLetterProps) => {
       setLetters(`${letters}${letter}`);
     }, 30);
   }
+
+  useEffect(() => {
+    setLetters("");
+  }, [text]);
 
   return { letters, text };
 };

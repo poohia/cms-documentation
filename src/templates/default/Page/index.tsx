@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Grid, Icon } from "semantic-ui-react";
-import DOMPurify from "dompurify";
 import Loader from "../Loader";
 import usePage from "./usePage";
 import {
@@ -43,7 +42,7 @@ const Page = () => {
               <div
                 className="joazco--page-content-row joazco-page-content-html-content-col-html"
                 dangerouslySetInnerHTML={{
-                  __html: DOMPurify.sanitize(page.content),
+                  __html: page.content,
                 }}
               />
             )}

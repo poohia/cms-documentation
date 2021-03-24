@@ -28,7 +28,7 @@ export const HeaderTextCenter = styled(Header)`
 export const FooterLinkContent = styled.div`
   a {
     cursor: pointer;
-    color: ${({ theme }) => theme.primary};
+    color: ${({ theme }) => theme.linkColor};
     font-size: 1.1rem;
   }
   &.nextPage {

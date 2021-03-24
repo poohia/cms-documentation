@@ -35,3 +35,6 @@ export const CardGroupLinks = styled(Card.Group)`
     justify-content: left;
   }
 `;
+export const LetterByLetterContent = styled.p`
+  line-height: 2em;
+`;

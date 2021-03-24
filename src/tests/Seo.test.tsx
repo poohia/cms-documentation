@@ -1,5 +1,5 @@
 import { renderHook, act } from "@testing-library/react-hooks";
-import { useConnection, useSeo } from "../joazco/hooks";
+import { useSeo, useConnection } from "../joazco";
 import { SEO } from "../types";
 import driver from "../drivers";
 
@@ -18,37 +18,36 @@ const data: SEO = {
 };
 
 test("stay signIn", async () => {
-  const { result } = renderHook(() => useConnection(driver));
+  const { result } = renderHook(() => useConnection());
   const { signIn } = result.current;
 
   await act(async () => {
     await signIn(email, password);
   });
 
-  const { logged } = result.current;
-  expect(logged).toBeTruthy();
+  const { data: user } = result.current;
+  expect(user).toEqual(expect.objectContaining({ email }));
 });
 
 test("test insertSeo", async () => {
-  const { result } = renderHook(() => useSeo(driver));
+  const { result } = renderHook(() => useSeo());
   const { insertSeo } = result.current;
 
   await act(async () => {
     await insertSeo(data);
   });
 
-  const { seo } = result.current;
+  const { data: seo } = result.current;
   expect(seo).toStrictEqual(data);
 });
 
 test("test getSeo", async () => {
-  const { result } = renderHook(() => useSeo(driver));
-  const { getSeo } = result.current;
+  const { result } = renderHook(() => useSeo());
+  const { loadData } = result.current;
 
-  await act(async () => {
-    await getSeo();
-  });
+  await act(async () => await loadData());
 
-  const { seo } = result.current;
+  const { data: seo } = result.current;
+
   expect(seo).toStrictEqual(data);
 });

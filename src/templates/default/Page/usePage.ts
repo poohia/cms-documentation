@@ -1,14 +1,15 @@
 import { useEffect, useMemo } from "react";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Page } from "../../../types";
-import { useNav, usePage as usePageJoazco } from "../../../joazcov2";
+import { useNav, usePage as usePageJoazco } from "../../../joazco";
+import useQueryUrl from "../../../useQueryUrl";
 
 const usePage = () => {
   const { slug } = useParams<{ slug: string }>();
-  const { push } = useHistory();
-
-  const { data: menus } = useNav();
-  const { loading, data: page } = usePageJoazco({ slug });
+  const { push, getQueryUrlVar } = useQueryUrl();
+  const liveChange = useMemo(() => getQueryUrlVar("liveChange"), []);
+  const { data: menus } = useNav(liveChange);
+  const { loading, data: page } = usePageJoazco({ slug }, liveChange);
 
   const links: {
     previousPage: Page | null;

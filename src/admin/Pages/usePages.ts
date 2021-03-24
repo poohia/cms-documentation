@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import { useConnection, usePages as usePagesJoazco } from "../../joazcov2";
+import { useConnection, usePages as usePagesJoazco } from "../../joazco";
 
 const usePages = () => {
   const [openModalCreate, setOpenCreateModal] = useState<boolean>(false);

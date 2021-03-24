@@ -1,7 +1,8 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
 import { useParams } from "react-router-dom";
-import { useConfig, useNav, useSeo } from "../../../joazcov2";
+import { useConfig, useNav, useSeo } from "../../../joazco";
 import { Menu } from "../../../types";
+import useQueryUrl from "../../../useQueryUrl";
 
 function initActiveIndex(slug: string, menus: Menu[]): number {
   if (typeof slug === "undefined") {
@@ -18,10 +19,13 @@ function initActiveIndex(slug: string, menus: Menu[]): number {
 }
 
 const useMenu = () => {
-  const { icon } = useConfig();
-  const { data: seo } = useSeo();
-  const { data: menus } = useNav();
   const { slug } = useParams<{ slug: string }>();
+  const { getQueryUrlVar } = useQueryUrl();
+  const liveChange = useMemo(() => getQueryUrlVar("liveChange"), []);
+  const { icon } = useConfig();
+  const { data: seo } = useSeo(liveChange);
+  const { data: menus } = useNav(liveChange);
+
   const [activeIndex, setActiveIndex] = useState<number>(
     initActiveIndex(slug, menus)
   );

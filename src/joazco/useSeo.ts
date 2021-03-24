@@ -1,8 +1,7 @@
 import { useState, useCallback, useMemo, useEffect } from "react";
 import useLanguages from "./useLanguages";
 import useConfig from "./useConfig";
-import { DriverSeo, Links, SEO } from "../types";
-import useQueryUrl from "../useQueryUrl";
+import { DriverSeo, Links, LiveShare, SEO } from "../types";
 
 const driver = process.env.REACT_APP_JOAZCO_CMS_DRIVER || "error";
 const joazcoError = "Joazco::: Seo service error";
@@ -20,29 +19,7 @@ function serializeSeo(value: Partial<SEO>): SEO {
   return s;
 }
 
-export const useSeoWithoutHistory = () => {
-  const [data, setData] = useState<SEO | undefined>(undefined);
-  const [loading, setLoading] = useState<boolean>(true);
-
-  const loadData = useCallback(async () => {
-    setLoading(true);
-    const { getSeo } = (
-      await import(`../drivers/${driver}/useSeo`)
-    ).default() as DriverSeo;
-    await getSeo().then((value) => {
-      setData(serializeSeo(value));
-      setLoading(false);
-    });
-  }, []);
-
-  useEffect(() => {
-    loadData();
-  }, []);
-
-  return { data, loading, loadData };
-};
-
-const useSeo = () => {
+const useSeo = (liveShare: LiveShare = null) => {
   const { locale } = useLanguages();
   const { enableCache } = useConfig();
   const tableCache = useMemo(() => `joazco.cache.seo.${locale}`, [locale]);
@@ -60,8 +37,6 @@ const useSeo = () => {
   const [data, setData] = useState<SEO | undefined>(loadCache());
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | undefined>(undefined);
-  const { getQueryUrlVar } = useQueryUrl();
-  const liveShare = useMemo(() => getQueryUrlVar("liveChange"), []);
 
   const loadData = useCallback(async () => {
     setError(undefined);
@@ -98,7 +73,8 @@ const useSeo = () => {
           const { insertSeo: insertSeoDriver } = module.default() as DriverSeo;
           insertSeoDriver(seo)
             .then((value) => {
-              loadData();
+              setData(serializeSeo(value));
+              setLoading(false);
               resolve(value);
             })
             .catch(() => {

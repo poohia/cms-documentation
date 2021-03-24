@@ -6,7 +6,7 @@ import {
   useConfig,
   useLanguages,
   usePage as usePageJoazco,
-} from "../../joazcov2";
+} from "../../joazco";
 import { Page } from "../../types";
 
 const usePage = () => {

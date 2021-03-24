@@ -35,3 +35,13 @@ yarn-error.log*
 .bash_history
 .yarnrc
 .node_repl_history
+
+src/templates/*
+# append your template if you want add it to git  
+!src/templates/default
+
+src/drivers/*
+# append your driver if you want add it to git  
+!src/drivers/firebase
+!src/drivers/localstorage
+!src/drivers/test

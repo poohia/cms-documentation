@@ -9,14 +9,7 @@ import {
 import { Props } from "../../types";
 
 const SignInForm = ({ submit }: Pick<Props, "submit">) => {
-  const {
-    email,
-    password,
-    loadingSignIn,
-    icon,
-    setEmail,
-    setPassword,
-  } = useConnection();
+  const { email, password, icon, setEmail, setPassword } = useConnection();
 
   return (
     <SignInFormContent className="joazco--signin-form-content">
@@ -73,7 +66,6 @@ const SignInForm = ({ submit }: Pick<Props, "submit">) => {
           </Form.Field>
           <ButtonSuccess
             className="joazco--signin-form-content-container-form-submit"
-            loading={loadingSignIn}
             type="submit"
             fluid
           >

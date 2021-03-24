@@ -1,10 +1,9 @@
 import { useState, useCallback } from "react";
-import { useJoazco } from "../../joazco";
-import { useConnection } from "../../joazcov2";
+import { useConnection, useSeo, useNav, usePages, usePage } from "../../joazco";
 import { MenuWithoutPage, Page, SEO } from "../../types";
 
 const seo: SEO = {
-  title: "Joazco",
+  title: "CMS Documentation Joazco",
   description:
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse libero neque, luctus id eros at, fermentum facilisis purus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Fusce tortor tellus, faucibus quis sem et, dictum elementum lorem.",
   keywords: "cms,documentation",
@@ -86,19 +85,11 @@ const menus: MenuWithoutPage[] = [
 ];
 
 const useFixtures = () => {
-  const {
-    menus: menusJoazco,
-    getMenus,
-    getPages,
-    insertSeo,
-    createPage,
-    createMenu,
-    addPageFromMenu,
-    updatePage,
-    removeMenu,
-    removePage,
-  } = useJoazco();
   const { loading: loadingConnection, data: user } = useConnection();
+  const { insertSeo } = useSeo();
+  const { data: menusJoazco, createMenu, addPageToMenu, removeMenu } = useNav();
+  const { data: pagesJoazco, createPage, removePage } = usePages();
+  const { updatePage } = usePage({});
   const [loading, setLoading] = useState<boolean>(false);
 
   const resetDatabase = useCallback(() => {
@@ -112,17 +103,16 @@ const useFixtures = () => {
         git: "",
       },
     });
-    getMenus().then((ms) => {
-      ms.forEach((m, k) => {
-        setTimeout(() => removeMenu(m.id), k * 200);
-      });
+    menusJoazco.forEach((m, k) => {
+      setTimeout(() => removeMenu(m.id), k * 200);
     });
-    getPages().then((ps) => {
-      ps.forEach((p, k) => {
-        setTimeout(() => removePage(p.id), k * 200);
-      });
+    pagesJoazco.forEach((p, k) => {
+      setTimeout(() => removePage(p.id), k * 200);
     });
-    setTimeout(() => setLoading(false), 2000);
+    setTimeout(() => {
+      setLoading(false);
+      window.location.reload();
+    }, 2000);
   }, []);
 
   const loadFixutres = useCallback(() => {
@@ -155,7 +145,7 @@ const useFixtures = () => {
     menus.forEach((menu, key) => {
       setTimeout(() => {
         menu.pages.forEach((pageId) => {
-          addPageFromMenu(menu.id, pageId);
+          addPageToMenu(menu.id, pageId);
         });
       }, key * 200);
     });

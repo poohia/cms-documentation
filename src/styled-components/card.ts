@@ -8,7 +8,7 @@ const Card = styled(CardSemantic)`
     animation-duration: 1.3s;
     animation-fill-mode: both;
     & > .content > .header {
-      color: ${({ theme }) => theme.primary};
+      color: ${({ theme }) => theme.linkColor};
     }
   }
 `;

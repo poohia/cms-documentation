@@ -1,9 +1,9 @@
 import { renderHook } from "@testing-library/react-hooks";
-import { useConfig, useLanguages } from "../joazco/hooks";
+import { useConfig, useLanguages } from "../joazco/";
 import {
   getDefaultLanguage,
   getNavigatorLanguage,
-} from "../joazco/hooks/useLanguages";
+} from "../joazco/useLanguages";
 
 test("test getNavigatorLanguage", () => {
   const locale = getNavigatorLanguage();

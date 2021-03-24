@@ -6,7 +6,6 @@ import useMenu from "../../useMenu";
 
 const MenuAccordion = () => {
   const { menus, activeIndex, slug, handleClick } = useMenu();
-
   return (
     <MenuAccordionContent className="joazco--menu-container-menu-list-item joazco--menu-container-menu-accordion">
       {menus.map((menu, key) => (

@@ -1,8 +1,7 @@
 import { useState, useMemo, useEffect, useCallback } from "react";
 import useLanguages from "./useLanguages";
 import useConfig from "./useConfig";
-import { DriverMenus, Menu, MenuWithoutPage, Page } from "../types";
-import useQueryUrl from "../useQueryUrl";
+import { DriverMenus, LiveShare, Menu, MenuWithoutPage, Page } from "../types";
 import usePages from "./usePages";
 
 const driver = process.env.REACT_APP_JOAZCO_CMS_DRIVER || "error";
@@ -34,7 +33,7 @@ function menuFromMenuWithoutPage(
   return currMenus;
 }
 
-const useNav = () => {
+const useNav = (liveShare: LiveShare = null) => {
   const { locale } = useLanguages();
   const { enableCache } = useConfig();
   const tableCache = useMemo(() => `joazco.cache.nav.${locale}`, [locale]);
@@ -53,8 +52,6 @@ const useNav = () => {
   const [data, setData] = useState<Menu[]>(loadCache());
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | undefined>(undefined);
-  const { getQueryUrlVar } = useQueryUrl();
-  const liveShare = useMemo(() => getQueryUrlVar("liveChange"), []);
 
   const loadData = useCallback(async () => {
     setError(undefined);
@@ -87,7 +84,7 @@ const useNav = () => {
       menuTitle: Menu["title"],
       menuCaption: Menu["caption"] = "",
       forceId?: string
-    ): Promise<Menu> =>
+    ): Promise<void> =>
       new Promise((resolve, reject) => {
         const findMenu = data.find((menu) => menu.title === menuTitle);
         if (findMenu) {
@@ -102,8 +99,9 @@ const useNav = () => {
           } = module.default() as DriverMenus;
           createMenuDriver(menuTitle, menuCaption, forceId)
             .then((value) => {
-              loadData();
-              resolve({ ...value, pages: [] });
+              setData(data.concat({ ...value, pages: [] }));
+              setLoading(false);
+              resolve();
             })
             .catch(() => {
               setError(joazcoError);
@@ -129,6 +127,8 @@ const useNav = () => {
         }
         setError(undefined);
         setLoading(true);
+        const currTitle = String(findMenu.title);
+        const currCaption = String(findMenu.caption);
         findMenu.title = menuTitle;
         findMenu.caption = menuCaption;
         import(`../drivers/${driver}/useMenus`).then((module) => {
@@ -140,10 +140,12 @@ const useNav = () => {
             pages: findMenu.pages.map((page) => page.id),
           })
             .then(() => {
-              loadData();
+              setLoading(false);
               resolve();
             })
             .catch(() => {
+              findMenu.title = currTitle;
+              findMenu.caption = currCaption;
               setError(joazcoError);
               setLoading(false);
               reject(new Error(joazcoError));
@@ -164,7 +166,8 @@ const useNav = () => {
           } = module.default() as DriverMenus;
           removeMenuDriver(id)
             .then(() => {
-              loadData();
+              setData(data.filter((menu) => menu.id !== id));
+              setLoading(false);
               resolve();
             })
             .catch(() => {
@@ -177,8 +180,88 @@ const useNav = () => {
     [data]
   );
 
+  const addPageToMenu = useCallback(
+    (menuId: Menu["id"], pageId: Page["id"], menu?: Menu): Promise<void> =>
+      new Promise((resolve, reject) => {
+        setError(undefined);
+        setLoading(true);
+        import(`../drivers/${driver}/useMenus`).then((module) => {
+          const {
+            updateMenu: updateMenuDriver,
+          } = module.default() as DriverMenus;
+          const findMenu =
+            typeof menu !== "undefined"
+              ? menu
+              : data.find((m) => m.id === menuId);
+          const findPage = pages.find((page) => page.id === pageId);
+          if (!findMenu || !findPage) {
+            reject(new Error("Joazco::: Menu not fond refresh page"));
+            return;
+          }
+          findMenu.pages.push(findPage);
+          updateMenuDriver({
+            ...findMenu,
+            pages: findMenu.pages.map((page) => page.id),
+          })
+            .then(() => {
+              setLoading(false);
+              resolve();
+            })
+            .catch(() => {
+              findMenu.pages = findMenu.pages.filter(
+                (page) => page.id !== pageId
+              );
+              setError(joazcoError);
+              setLoading(false);
+              reject(new Error(joazcoError));
+            });
+        });
+      }),
+    [data]
+  );
+
+  const removePageFromMenu = useCallback(
+    (menuId: Menu["id"], pageId: Page["id"], menu?: Menu): Promise<void> =>
+      new Promise((resolve, reject) => {
+        setError(undefined);
+        setLoading(true);
+        import(`../drivers/${driver}/useMenus`).then((module) => {
+          const {
+            updateMenu: updateMenuDriver,
+          } = module.default() as DriverMenus;
+          const findMenu =
+            typeof menu !== "undefined"
+              ? menu
+              : data.find((m) => m.id === menuId);
+          if (!findMenu) {
+            reject(new Error("Joazco::: Menu not fond refresh page"));
+            return;
+          }
+          findMenu.pages = findMenu.pages.filter((page) => page.id !== pageId);
+          updateMenuDriver({
+            ...findMenu,
+            pages: findMenu.pages.map((page) => page.id),
+          })
+            .then(() => {
+              setLoading(false);
+              resolve();
+            })
+            .catch(() => {
+              const findPage = pages.find((page) => page.id === pageId);
+              if (findPage) {
+                findMenu.pages.push(findPage);
+              }
+              setError(joazcoError);
+              setLoading(false);
+              reject(new Error(joazcoError));
+            });
+        });
+      }),
+    [data]
+  );
+
   useEffect(() => {
-    if (pages) {
+    if (pages && pages.length > 0) {
       loadData();
     }
   }, [pages]);
@@ -197,6 +280,8 @@ const useNav = () => {
     createMenu,
     updateMenu,
     removeMenu,
+    addPageToMenu,
+    removePageFromMenu,
   };
 };
 

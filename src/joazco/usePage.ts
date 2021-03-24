@@ -1,13 +1,15 @@
 import { useState, useMemo, useCallback, useEffect } from "react";
 import useLanguages from "./useLanguages";
 import useConfig from "./useConfig";
-import { DriverPages, Page } from "../types";
-import useQueryUrl from "../useQueryUrl";
+import { DriverPages, LiveShare, Page } from "../types";
 
 const driver = process.env.REACT_APP_JOAZCO_CMS_DRIVER || "error";
 const joazcoError = "Joazco::: Page service error";
 
-const usePage = ({ id, slug }: { id?: string; slug?: string }) => {
+const usePage = (
+  { id, slug }: { id?: string; slug?: string },
+  liveShare: LiveShare = null
+) => {
   const { locale } = useLanguages();
   const { enableCache } = useConfig();
   const tableCache = useMemo(
@@ -28,8 +30,6 @@ const usePage = ({ id, slug }: { id?: string; slug?: string }) => {
   const [data, setData] = useState<Page | undefined>(loadCache());
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | undefined>(undefined);
-  const { getQueryUrlVar } = useQueryUrl();
-  const liveShare = useMemo(() => getQueryUrlVar("liveChange"), []);
 
   const loadData = useCallback(async () => {
     setError(undefined);
@@ -57,6 +57,9 @@ const usePage = ({ id, slug }: { id?: string; slug?: string }) => {
           setError(joazcoError);
           setLoading(false);
         });
+    } else {
+      setLoading(false);
+      setError("id or slug empty");
     }
 
     if (liveShare && slug) {
@@ -81,7 +84,8 @@ const usePage = ({ id, slug }: { id?: string; slug?: string }) => {
           } = module.default() as DriverPages;
           updatePageDriver(page, forceId)
             .then((value) => {
-              loadData();
+              setData(value);
+              setLoading(false);
               resolve(value);
             })
             .catch(() => {

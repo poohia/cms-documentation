@@ -1,7 +1,7 @@
 import { DriverMenus, MenuWithoutPage } from "../../../types";
 
 const databaseError = "Test::: Error database connection";
-const menus: MenuWithoutPage[] = [];
+let menus: MenuWithoutPage[] = [];
 
 const useMenus = (): DriverMenus => {
   const getMenus = (): Promise<MenuWithoutPage[]> =>
@@ -46,7 +46,7 @@ const useMenus = (): DriverMenus => {
     new Promise((resolve, reject) => {
       const findMenu = menus.find((m) => id === m.id);
       if (findMenu) {
-        menus.filter((m) => m.id === id);
+        menus = menus.filter((m) => m.id !== id);
         resolve();
       } else {
         reject(new Error(databaseError));

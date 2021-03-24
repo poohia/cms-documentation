@@ -1,10 +1,8 @@
 import { useState, useCallback } from "react";
-import { useJoazco } from "../../joazco";
-import { useConnection, useConfig, usePages, useNav } from "../../joazcov2";
+import { useConnection, useConfig, usePages, useNav } from "../../joazco";
 import { Menu } from "../../types";
 
 const useMenuConfiguration = (menu?: Menu) => {
-  const { removePageFromMenu, addPageFromMenu } = useJoazco();
   const { driver } = useConfig();
   const { data: pages } = usePages();
   const { loading: loadingConnection, data: user } = useConnection();
@@ -14,14 +12,14 @@ const useMenuConfiguration = (menu?: Menu) => {
     createMenu,
     updateMenu,
     removeMenu,
+    addPageToMenu,
+    removePageFromMenu,
   } = useNav();
   const [menuTitle, setMenuTitle] = useState<string>(menu ? menu.title : "");
   const [menuCaption, setMenuCaption] = useState<string>(
     menu ? menu.caption || "" : ""
   );
   const [filter, setFilter] = useState<string>("");
-
-  // console.log(menus);
 
   const handleSubmit = useCallback(
     (title: string, caption: string) => {
@@ -61,10 +59,10 @@ const useMenuConfiguration = (menu?: Menu) => {
     updateMenu,
     removeMenu,
     removePageFromMenu,
-    addPageFromMenu,
     setMenuTitle,
     setMenuCaption,
     setFilter,
+    addPageToMenu,
   };
 };
 

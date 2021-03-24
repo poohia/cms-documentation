@@ -12,10 +12,13 @@ const MenuConfiguration = () => {
     loadingConnection,
     user,
     driver,
+    pages,
     menus,
     handleSubmit,
     handleUpdateSubmit,
     removeMenu,
+    addPageToMenu,
+    removePageFromMenu,
   } = useMenuConfiguration();
 
   if (loadingConnection) {
@@ -59,8 +62,12 @@ const MenuConfiguration = () => {
               <PanelMenu
                 loading={loadingMenus}
                 menu={menu}
+                menus={menus}
+                pages={pages}
                 removeMenu={removeMenu}
                 handleUpdateSubmit={handleUpdateSubmit}
+                addPageToMenu={addPageToMenu}
+                removePageFromMenu={removePageFromMenu}
               />
             </Grid.Column>
           ))}

@@ -1,15 +1,14 @@
 import { useState } from "react";
-import { useJoazco } from "../../joazco";
+import { useConfig } from "../../joazco";
 
 const useConnection = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const { loadingSignIn, icon } = useJoazco();
+  const { icon } = useConfig();
 
   return {
     email,
     password,
-    loadingSignIn,
     icon,
     setEmail,
     setPassword,
