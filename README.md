@@ -1,7 +1,7 @@
 # CMS Documentation Joazco
 
 CMS Documentation Joazco is a small CMS, which aims to simplify the writing of a documentation or a tutorial in a website format. It is intended for developers who want to give more visibility to their code without creating a website from A to Z.
-Very easy to use, CMS documentation Joazco uses serverless technology for a low installation and maintenance cost. The development of the CMS was inspired by documentations like [ReactNative](https://reactnative.dev/docs/getting-started), [Flutter](https://flutter.dev/docs), [Ionic](https://ionicframework.com / docs) and others. Indeed, on your left, you will find the menu and on your right, the content of the documentation page.
+Very easy to use, CMS documentation Joazco uses serverless technology for a low installation and maintenance cost. The development of the CMS was inspired by documentations like [ReactNative](https://reactnative.dev/docs/getting-started), [Flutter](https://flutter.dev/docs), [Ionic](https://ionicframework.com/docs) and others. Indeed, on your left, you will find the menu and on your right, the content of the documentation page.
 Of course, the website is fully responsive, the home page and the menu are automatically generated and take into account multi-language as needed.
 
 ![Node CI](https://github.com/poohia/cms-documentation/workflows/Node%20CI/badge.svg)
