@@ -27,7 +27,7 @@ npm start
 
 ## Drivers
 
-In CMS Documentation Joaco, the drivers are the codes used to communicate with a database. By default the value is equal to localstorage. However, datas will only be saved in your browser, to make datas readable on the internet, CMS documentation is compatible with Firebase (see .env.production).
+In CMS Documentation Joazco, the drivers are the codes used to communicate with a database. By default the value is equal to localstorage. However, datas will only be saved in your browser, to make datas readable on the internet, CMS documentation is compatible with Firebase (see .env.production).
 
 ### Localstorage
 
