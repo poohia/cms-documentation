@@ -21,11 +21,9 @@ npm install
 npm start
 ```
 
-> http://localhost:3000
+> [http://localhost:3000](http://localhost:3000)
 
-> http://localhost:3000/joazco-connection
-
-> http://localhost:3000/joazco-admin
+> [http://localhost:3000/joazco-admin](http://localhost:3000/joazco-admin)
 
 ## Drivers
 
@@ -77,49 +75,7 @@ CMS Documentation Joazco needs you to create realtime database in firebase, and 
 
 #### Connect CMS Documentation with my Back End
 
-Il est possible de créer son driver pour communiquer avec une base de données pas prévue para CMS Documentation Joazco, just copy drivers/localstorage to drivers/mydriver and follow name files and types
-
-```typescript
-export interface DriverConnection {
-  onceCheckLogged: () => Promise<User>;
-  signIn: (email: string, password: string) => Promise<User>;
-  signOut: () => Promise<void>;
-}
-export interface DriverMenus {
-  getMenus: () => Promise<MenuWithoutPage[]>;
-  listenMenus: (callback: (data: MenuWithoutPage[] | null) => void) => void;
-  createMenu: (
-    menuTitle: MenuWithoutPage["title"],
-    menuCaption: MenuWithoutPage["caption"],
-    id?: string
-  ) => Promise<MenuWithoutPage>;
-  updateMenu: (menu: MenuWithoutPage) => Promise<MenuWithoutPage>;
-  removeMenu: (id: MenuWithoutPage["id"]) => Promise<void>;
-}
-export interface DriverPages {
-  getPages: () => Promise<Page[]>;
-  listenPages: (callback: (pages: Page[]) => void) => void;
-  getPage: (id: Page["id"]) => Promise<Page>;
-  getPageBySlug: (slug: Page["slug"]) => Promise<Page>;
-  listenPageBySlug: (
-    slug: Page["slug"],
-    callback: (page: Page | null) => void
-  ) => void;
-  createPage: (page: Omit<Page, "id">, id?: string) => Promise<Page>;
-  updatePage: (page: Page, id?: string) => Promise<Page>;
-  removePage: (id: Page["id"]) => Promise<void>;
-}
-export interface DriverSeo {
-  insertSeo: (data: SEO) => Promise<SEO>;
-  getSeo: () => Promise<Partial<SEO>>;
-  listenSeo: (callback: (data: Partial<SEO>) => void) => void;
-}
-export interface DriverStylesheet {
-  insertStylesheet: (data: string) => Promise<string>;
-  getStylesheet: () => Promise<string>;
-  listenStylesheet: (callback: (data: string) => void) => void;
-}
-```
+It is possible to create a driver to communicate with a database not provided by CMS Documentation Joazco, just copy drivers/localstorage to drivers/mydriver and follow name files and types
 
 ### Front office template
 
@@ -171,7 +127,7 @@ REACT_APP_JOAZCO_ENABLE_CACHE=
 REACT_APP_ENABLE_FIXTURES=
 
 ## See customise stylesheet documentation, this is css vars will be set
-REACT_APP_JOAZCO_PRIMARY_COLOR= # Only use into back office
+REACT_APP_JOAZCO_PRIMARY_COLOR= # Use into all project
 REACT_APP_JOAZCO_SECONDARY_COLOR= # Only use into back office
 REACT_APP_JOAZCO_SUCCESS_COLOR= # Only use into back office
 REACT_APP_JOAZCO_WARNING_COLOR= # Only use into back office

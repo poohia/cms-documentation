@@ -1,7 +1,13 @@
 {
-  "name": "tmp",
-  "version": "0.1.0",
+  "name": "cms-documentation-joazco",
+  "version": "1.0.0",
   "private": true,
+  "license" : "SEE LICENSE IN LICENSE",
+  "author": {
+    "name" : "AZOULAY Jordan",
+    "email" : "jazoulay@joazco.com",
+    "url" : "https://cms-documentation.joazco.com"
+  },
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",

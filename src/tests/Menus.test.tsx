@@ -60,10 +60,17 @@ test("test getMenus", async () => {
 
 test("test addPageFromMenu", async () => {
   const { result: resultPage } = renderHook(() => usePages());
+  const { result } = renderHook(() => useNav());
+  const { loadData } = result.current;
+
   const { createPage } = resultPage.current;
 
   await act(async () => {
     await createPage(pages[0].title, pages[0].slug, pages[0].id);
+  });
+
+  await act(async () => {
+    await loadData();
   });
 
   const { data: ps } = resultPage.current;
@@ -73,7 +80,6 @@ test("test addPageFromMenu", async () => {
   expect(pageFind).toStrictEqual(pages[0]);
 
   if (pageFind) {
-    const { result } = renderHook(() => useNav());
     const { addPageToMenu } = result.current;
 
     await act(async () => {
@@ -87,10 +93,16 @@ test("test addPageFromMenu", async () => {
 
 test("test removePageFromMenu", async () => {
   const { result: resultPage } = renderHook(() => usePages());
+  const { result } = renderHook(() => useNav());
   const { removePage } = resultPage.current;
+  const { loadData } = result.current;
 
   await act(async () => {
     await removePage(pages[0].id);
+  });
+
+  await act(async () => {
+    await loadData();
   });
 
   const { data: ps } = resultPage.current;
@@ -98,7 +110,6 @@ test("test removePageFromMenu", async () => {
 
   expect(pageFind).toStrictEqual(undefined);
 
-  const { result } = renderHook(() => useNav());
   const { removePageFromMenu } = result.current;
 
   await act(async () => {
@@ -110,6 +121,13 @@ test("test removePageFromMenu", async () => {
 
 test("test updateMenu", async () => {
   const { result } = renderHook(() => useNav());
+
+  const { loadData } = result.current;
+
+  await act(async () => {
+    await loadData();
+  });
+
   const { updateMenu } = result.current;
 
   await act(async () => {
@@ -124,6 +142,13 @@ test("test updateMenu", async () => {
 
 test("test removeMenu", async () => {
   const { result } = renderHook(() => useNav());
+
+  const { loadData } = result.current;
+
+  await act(async () => {
+    await loadData();
+  });
+
   const { removeMenu } = result.current;
 
   await act(async () => {
