@@ -13,24 +13,23 @@ const useMenuConfiguration = (menu?: Menu) => {
     updateMenu,
     removeMenu,
     addPageToMenu,
+    updatePagesFromMenu,
     removePageFromMenu,
   } = useNav();
   const [menuTitle, setMenuTitle] = useState<string>(menu ? menu.title : "");
   const [menuCaption, setMenuCaption] = useState<string>(
     menu ? menu.caption || "" : ""
   );
+  const [editMode, setEditMode] = useState<boolean>(false);
+  const [appendPageMode, setAppendPageMode] = useState<boolean>(false);
   const [filter, setFilter] = useState<string>("");
 
   const handleSubmit = useCallback(
-    (title: string, caption: string) => {
+    (title: string, caption: string): Promise<void> => {
       if (title !== "") {
-        createMenu(title, caption)
-          .then(() => {
-            setMenuTitle("");
-            setMenuCaption("");
-          })
-          .catch((reason) => window.alert(reason));
+        return createMenu(title, caption);
       }
+      return Promise.resolve();
     },
     [menus]
   );
@@ -40,7 +39,7 @@ const useMenuConfiguration = (menu?: Menu) => {
       if (title === "") return;
       updateMenu(id, title, caption).catch((reason) => window.alert(reason));
     },
-    []
+    [menus]
   );
 
   return {
@@ -53,6 +52,8 @@ const useMenuConfiguration = (menu?: Menu) => {
     menuTitle,
     menuCaption,
     filter,
+    editMode,
+    appendPageMode,
     handleSubmit,
     handleUpdateSubmit,
     createMenu,
@@ -63,6 +64,9 @@ const useMenuConfiguration = (menu?: Menu) => {
     setMenuCaption,
     setFilter,
     addPageToMenu,
+    setEditMode,
+    setAppendPageMode,
+    updatePagesFromMenu,
   };
 };
 

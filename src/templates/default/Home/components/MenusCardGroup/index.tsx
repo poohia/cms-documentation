@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { useHistory } from "react-router-dom";
 import { useNav } from "../../../../../joazco";
 import { Card } from "../../../../../styled-components";
+import useQueryUrl from "../../../../../useQueryUrl";
 
 const MenusCardGroup = () => {
-  const { data: menus } = useNav();
+  const { getQueryUrlVar } = useQueryUrl();
+  const liveChange = useMemo(() => getQueryUrlVar("liveChange"), []);
+  const { data: menus } = useNav(liveChange);
   const { push } = useHistory();
 
   return (

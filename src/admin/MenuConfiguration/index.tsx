@@ -19,6 +19,7 @@ const MenuConfiguration = () => {
     removeMenu,
     addPageToMenu,
     removePageFromMenu,
+    updatePagesFromMenu,
   } = useMenuConfiguration();
 
   if (loadingConnection) {
@@ -68,6 +69,7 @@ const MenuConfiguration = () => {
                 handleUpdateSubmit={handleUpdateSubmit}
                 addPageToMenu={addPageToMenu}
                 removePageFromMenu={removePageFromMenu}
+                updatePagesFromMenu={updatePagesFromMenu}
               />
             </Grid.Column>
           ))}

@@ -43,15 +43,11 @@ const usePages = () => {
   }, []);
 
   const handleSubmit = useCallback(
-    (t: string, s: string) => {
+    (t: string, s: string): Promise<void> => {
       if (t !== "" && s !== "" && isSlug(s)) {
-        createPage(t, s)
-          .then(() => {
-            setTitle("");
-            setSlug("");
-          })
-          .catch((reason) => window.alert(reason));
+        return createPage(t, s);
       }
+      return Promise.resolve();
     },
     [pages]
   );

@@ -14,7 +14,7 @@ const PopupCreatePage = ({
   handleSubmit,
 }: {
   loadingPages: boolean;
-  handleSubmit: (title: string, slug: string) => void;
+  handleSubmit: (title: string, slug: string) => Promise<void>;
 }) => {
   const { title, slug, setTitle, setSlug, createSlug } = usePages();
 
@@ -35,7 +35,16 @@ const PopupCreatePage = ({
       }
     >
       <Popup.Content>
-        <Form onSubmit={() => handleSubmit(title, slug)}>
+        <Form
+          onSubmit={() => {
+            handleSubmit(title, slug)
+              .then(() => {
+                setTitle("");
+                setSlug("");
+              })
+              .catch((reason) => window.alert(reason));
+          }}
+        >
           <PopupRow>
             <Label required htmlFor="pageName">
               <span>Page name</span>

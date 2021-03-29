@@ -2,11 +2,11 @@
   "name": "cms-documentation-joazco",
   "version": "1.0.0",
   "private": true,
-  "license" : "SEE LICENSE IN LICENSE",
+  "license": "SEE LICENSE IN LICENSE",
   "author": {
-    "name" : "AZOULAY Jordan",
-    "email" : "jazoulay@joazco.com",
-    "url" : "https://cms-documentation.joazco.com"
+    "name": "AZOULAY Jordan",
+    "email": "jazoulay@joazco.com",
+    "url": "https://cms-documentation.joazco.com"
   },
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.4",
@@ -16,6 +16,7 @@
     "@types/node": "^12.0.0",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
+    "array-move": "^3.0.1",
     "firebase": "^8.2.9",
     "history": "^5.0.0",
     "node-sass": "^5.0.0",
@@ -24,6 +25,7 @@
     "react-helmet": "^6.1.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
+    "react-sortable-hoc": "^2.0.0",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^2.0.3",
     "styled-components": "^5.2.1",
