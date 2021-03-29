@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { SuspenseContent } from "./styles";
 import { useLanguages, useStylesheet, useConfig, useSeo } from "./joazco";
+import { defaultTheme } from "./styled-components/theme";
 
 const template: string = process.env.REACT_APP_JOAZCO_TEMPLATE || "default";
 
@@ -44,6 +45,7 @@ function App() {
         <meta property="og:type" content="website" />
         <meta property="og:description" content={description} />
         <meta property="og:locale" content={locale} />
+        <meta name="theme-color" content={defaultTheme.primary} />
         {description && <meta name="description" content={description} />}
         {keywords && <meta name="keywords" content={keywords} />}
         {favIcon && <link rel="icon" href={favIcon} />}

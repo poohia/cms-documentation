@@ -220,6 +220,44 @@ const useNav = (liveShare: LiveShare = null) => {
     [data]
   );
 
+  const updatePagesFromMenu = useCallback(
+    (menuId: Menu["id"], newPages: Page[], menu?: Menu): Promise<void> =>
+      new Promise((resolve, reject) => {
+        setError(undefined);
+        setLoading(true);
+        import(`../drivers/${driver}/useMenus`).then((module) => {
+          const {
+            updateMenu: updateMenuDriver,
+          } = module.default() as DriverMenus;
+          const findMenu =
+            typeof menu !== "undefined"
+              ? menu
+              : data.find((m) => m.id === menuId);
+          if (!findMenu) {
+            reject(new Error("Joazco::: Menu not fond refresh page"));
+            return;
+          }
+          const oldPages = JSON.parse(JSON.stringify(findMenu.pages));
+          findMenu.pages = newPages;
+          updateMenuDriver({
+            ...findMenu,
+            pages: findMenu.pages.map((page) => page.id),
+          })
+            .then(() => {
+              setLoading(false);
+              resolve();
+            })
+            .catch(() => {
+              findMenu.pages = oldPages;
+              setError(joazcoError);
+              setLoading(false);
+              reject(new Error(joazcoError));
+            });
+        });
+      }),
+    [data]
+  );
+
   const removePageFromMenu = useCallback(
     (menuId: Menu["id"], pageId: Page["id"], menu?: Menu): Promise<void> =>
       new Promise((resolve, reject) => {
@@ -281,6 +319,7 @@ const useNav = (liveShare: LiveShare = null) => {
     updateMenu,
     removeMenu,
     addPageToMenu,
+    updatePagesFromMenu,
     removePageFromMenu,
   };
 };

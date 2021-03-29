@@ -52,7 +52,7 @@ const usePages = (liveShare: LiveShare = null) => {
   }, []);
 
   const createPage = useCallback(
-    (title: string, slug: string, id?: string): Promise<Page> =>
+    (title: string, slug: string, id?: string): Promise<void> =>
       new Promise((resolve, reject) => {
         const p: Pick<Page, "title" | "slug" | "content"> = {
           title,
@@ -74,7 +74,7 @@ const usePages = (liveShare: LiveShare = null) => {
             .then((value) => {
               setData(data.concat([value]));
               setLoading(false);
-              resolve(value);
+              resolve();
             })
             .catch(() => {
               setError(joazcoError);
@@ -108,7 +108,7 @@ const usePages = (liveShare: LiveShare = null) => {
             });
         });
       }),
-    []
+    [data]
   );
 
   useEffect(() => {

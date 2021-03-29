@@ -14,7 +14,7 @@ const PopupBtnAppendMenu = ({
   handleSubmit,
 }: {
   loadingMenus: boolean;
-  handleSubmit: (title: string, caption: string) => void;
+  handleSubmit: (title: string, caption: string) => Promise<void>;
 }) => {
   const {
     menuTitle,
@@ -40,7 +40,16 @@ const PopupBtnAppendMenu = ({
       }
     >
       <Popup.Content>
-        <Form onSubmit={() => handleSubmit(menuTitle, menuCaption)}>
+        <Form
+          onSubmit={() => {
+            handleSubmit(menuTitle, menuCaption)
+              .then(() => {
+                setMenuTitle("");
+                setMenuCaption("");
+              })
+              .catch((reason) => window.alert(reason));
+          }}
+        >
           <PopupRow>
             <Label htmlFor="menuTitle" required>
               <span>Menu name</span>

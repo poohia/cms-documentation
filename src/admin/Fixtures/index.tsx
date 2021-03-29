@@ -24,6 +24,11 @@ const Fixtures = () => {
 
   return (
     <AdminContainer>
+      <p>
+        Click to &#34;Reset database&#34; wait window reload, click to &#34;Load
+        fixtures&#34; wait window reload and click to &#34;Config Menu&#34; wait
+        window reload
+      </p>
       <Button
         onClick={() => {
           resetDatabase();

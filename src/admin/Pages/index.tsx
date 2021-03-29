@@ -61,8 +61,10 @@ const Pages = () => {
               </Table.Header>
               <Table.Body>
                 {pages
-                  .filter((p) =>
-                    p.title.toLowerCase().includes(filter.toLowerCase())
+                  .filter(
+                    (p) =>
+                      p.title.toLowerCase().includes(filter.toLowerCase()) ||
+                      p.slug.toLowerCase().includes(filter.toLowerCase())
                   )
                   .map((page) => (
                     <Table.Row key={page.id}>

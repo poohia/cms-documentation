@@ -7,6 +7,7 @@ const Card = styled(CardSemantic)`
     animation-name: fadeIn;
     animation-duration: 1.3s;
     animation-fill-mode: both;
+    flex-grow: 1;
     & > .content > .header {
       color: ${({ theme }) => theme.linkColor};
     }

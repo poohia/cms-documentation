@@ -18,8 +18,28 @@ export type PanelMenuProps = {
     pageId: Page["id"],
     menu?: Menu
   ) => Promise<void>;
+  updatePagesFromMenu: (
+    menuId: Menu["id"],
+    newPages: Page[],
+    menu?: Menu
+  ) => Promise<void>;
 };
 export type PopupBtnUpdateMenuProps = Omit<
   PanelMenuProps,
   "removeMenu" | "removePageFromMenu"
 > & {};
+
+export type ListPageProps = Pick<PanelMenuProps, "menu" | "menus" | "pages"> & {
+  addPageToMenu: (menuId: string, pageId: string) => void;
+};
+
+export type ListSubMenusProps = Pick<
+  PanelMenuProps,
+  "menu" | "removePageFromMenu" | "updatePagesFromMenu" | "menu"
+>;
+export type SortableItemProps = ListSubMenusProps & {
+  page: Page;
+};
+export type PanelMenuContainerProps = PanelMenuProps & {
+  appendPageMode: boolean;
+};
