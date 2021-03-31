@@ -7,6 +7,12 @@ export const SignInFormContent = styled.div`
   transform: translate(-50%, -50%);
   width: 500px;
   font-size: 16px;
+  @media screen and (max-width: 627px) {
+    position: static;
+    transform: none;
+    width: 80%;
+    margin: 0 5%;
+  }
 `;
 export const SignInFormContainer = styled.div`
   display: flex;

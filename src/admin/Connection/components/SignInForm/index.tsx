@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { Form, Label, ButtonSuccess } from "../../../../styled-components";
 import useConnection from "../../useConnection";
 import {
@@ -15,11 +16,13 @@ const SignInForm = ({ submit }: Pick<Props, "submit">) => {
     <SignInFormContent className="joazco--signin-form-content">
       <SignInFormContainer className="joazco--signin-form-content-container">
         {icon && (
-          <SignInFormImg
-            className="joazco--signin-form-content-container-img"
-            src={icon}
-            alt="logo"
-          />
+          <Link to="/">
+            <SignInFormImg
+              className="joazco--signin-form-content-container-img"
+              src={icon}
+              alt="logo"
+            />
+          </Link>
         )}
         <Form
           className="joazco--signin-form-content-container-form"

@@ -13,6 +13,10 @@ export const AdminContainer = styled.div`
   height: 100%;
   margin-left: 250px;
   padding: 10px 10px 10px 20px;
+  @media screen and (max-width: 885px) {
+    margin-left: 0px;
+    padding-left: 55px;
+  }
 `;
 export const UserContainer = styled.div`
   > div.grid {

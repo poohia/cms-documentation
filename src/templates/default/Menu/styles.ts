@@ -24,6 +24,7 @@ export const MenuResponsive = styled.nav`
   display: none;
   @media screen and (max-width: 885px) {
     display: block;
+    font-size: 0.8em;
     width: 50px;
     height: 100vh;
     position: fixed;
@@ -48,7 +49,11 @@ export const MenuList = styled(MenuListAdmin)`
 `;
 export const MenuFooter = styled(MenuFooterAdmin)``;
 export const MenuListItem = styled(MenuListItemAdmin)``;
-export const MenuBrandTitle = styled(MenuBrandTitleAdmin)``;
+export const MenuBrandTitle = styled(MenuBrandTitleAdmin)`
+  i.icon {
+    margin-right: 4px;
+  }
+`;
 export const MenuImg = styled(MenuImgAdmin)``;
 export const MenuAccordionContent = styled(Accordion)`
   div.title {

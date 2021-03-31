@@ -113,7 +113,7 @@ const useFixtures = () => {
       setLoading(false);
       window.location.reload();
     }, 2000);
-  }, []);
+  }, [menusJoazco, pagesJoazco]);
 
   const loadFixutres = useCallback(() => {
     setLoading(true);
@@ -138,7 +138,7 @@ const useFixtures = () => {
       () => window.location.reload(),
       pages.length * 200 + menus.length * 200 + 200
     );
-  }, []);
+  }, [menusJoazco, pagesJoazco]);
 
   const configMenus = useCallback(() => {
     setLoading(true);
@@ -150,7 +150,7 @@ const useFixtures = () => {
       }, key * 200);
     });
     setTimeout(() => window.location.reload(), menus.length * 200 + 200);
-  }, [menusJoazco]);
+  }, [menusJoazco, pagesJoazco]);
 
   return {
     loadingConnection,

@@ -16,7 +16,13 @@ import {
 import useMenu from "./useMenu";
 
 const Menu = () => {
-  const { icon, title, openMenuResponsive, setOpenMenuResponsive } = useMenu();
+  const {
+    icon,
+    title,
+    openMenuResponsive,
+    user,
+    setOpenMenuResponsive,
+  } = useMenu();
 
   return (
     <>
@@ -45,6 +51,21 @@ const Menu = () => {
                 {title}
               </MenuBrandTitle>
             </MenuListItem>
+            {user && (
+              <MenuListItem
+                center
+                className="joazco--menu-container-menu-list-item"
+              >
+                <MenuBrandTitle className="joazco--menu-container-menu-list-item-acess-admin">
+                  <Link to="/joazco-admin">
+                    <MenuBrandTitle>
+                      <Icon name="settings" size="large" />
+                      Accès admin interface
+                    </MenuBrandTitle>
+                  </Link>
+                </MenuBrandTitle>
+              </MenuListItem>
+            )}
             <DropdownLanguages />
             <MenuAccordion />
           </MenuList>
@@ -60,7 +81,7 @@ const Menu = () => {
           </MenuFooter>
         </MenuContainer>
       </MenuContent>
-      <MenuResponsive>
+      <MenuResponsive className="joazco--menu-responsive">
         <div>
           <Icon
             onClick={() => setOpenMenuResponsive(!openMenuResponsive)}
