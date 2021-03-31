@@ -3,6 +3,7 @@ import { useMemo } from "react";
 export type UseConfigRest = {
   driver: "firebase" | "localstorage" | "test" | string;
   env: "production" | "development" | "test";
+  template: string;
   enableFixtures: boolean;
   enableCache: boolean;
   icon?: string;
@@ -21,6 +22,10 @@ const useConfig = (): UseConfigRest => {
   );
   const env: "production" | "development" | "test" = useMemo(
     () => process.env.NODE_ENV || "development",
+    []
+  );
+  const template = useMemo(
+    () => process.env.REACT_APP_JOAZCO_TEMPLATE || "default",
     []
   );
   const enableFixtures = useMemo(() => {
@@ -44,7 +49,7 @@ const useConfig = (): UseConfigRest => {
     return false;
   }, []);
 
-  return { driver, icon, env, enableFixtures, enableCache };
+  return { driver, icon, env, template, enableFixtures, enableCache };
 };
 
 export default useConfig;

@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
 import { useParams } from "react-router-dom";
-import { useConfig, useNav, useSeo } from "../../../joazco";
+import { useConfig, useConnection, useNav, useSeo } from "../../../joazco";
 import { Menu } from "../../../types";
 import useQueryUrl from "../../../useQueryUrl";
 
@@ -23,12 +23,11 @@ const useMenu = () => {
   const { getQueryUrlVar } = useQueryUrl();
   const liveChange = useMemo(() => getQueryUrlVar("liveChange"), []);
   const { icon } = useConfig();
+  const { data: user } = useConnection();
   const { data: seo } = useSeo(liveChange);
-  const { data: menus } = useNav(liveChange);
+  const { data: menus, loading: loadingMenus } = useNav(liveChange);
 
-  const [activeIndex, setActiveIndex] = useState<number>(
-    initActiveIndex(slug, menus)
-  );
+  const [activeIndex, setActiveIndex] = useState<number>(0);
   const [openMenuResponsive, setOpenMenuResponsive] = useState<boolean>(false);
 
   const handleClick = useCallback(
@@ -48,6 +47,12 @@ const useMenu = () => {
     setActiveIndex(initActiveIndex(slug, menus));
   }, [slug]);
 
+  useEffect(() => {
+    if (!loadingMenus) {
+      setActiveIndex(initActiveIndex(slug, menus));
+    }
+  }, [slug, menus, loadingMenus]);
+
   return {
     icon,
     title,
@@ -55,6 +60,7 @@ const useMenu = () => {
     activeIndex,
     slug,
     openMenuResponsive,
+    user,
     handleClick,
     setOpenMenuResponsive,
   };

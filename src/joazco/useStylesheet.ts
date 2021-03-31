@@ -60,6 +60,7 @@ const useStylesheet = (liveShare: LiveShare = null) => {
           insertStylesheetDriver(stylesheet)
             .then((value) => {
               setData(value);
+              setLoading(false);
               resolve();
             })
             .catch(() => {

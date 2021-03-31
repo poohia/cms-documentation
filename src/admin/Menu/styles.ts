@@ -12,6 +12,14 @@ export const MenuContent = styled.nav`
   box-shadow: 4px 1px 5px 0px rgba(0, 0, 0, 0.25);
   box-sizing: border-box;
   z-index: 9;
+  @media screen and (max-width: 885px) {
+    width: 0;
+    transition: width 0.3s ease-in-out;
+    top: 0;
+    &.active {
+      width: 250px;
+    }
+  }
 `;
 export const MenuContainer = styled.div`
   display: flex;
@@ -27,7 +35,7 @@ export const MenuList = styled.ul`
 `;
 export const MenuFooter = styled.p`
   padding: 5px;
-  font-size: 0.5rem;
+  font-size: 0.5em;
   flex-grow: 0;
 `;
 export const MenuListItem = styled.li<{ center?: boolean; active?: boolean }>`
@@ -64,4 +72,23 @@ export const MenuBtnSignOut = styled.button`
 export const MenuImg = styled.img`
   width: 100%;
   padding: 3px 10px;
+`;
+export const MenuResponsive = styled.nav`
+  display: none;
+  @media screen and (max-width: 885px) {
+    display: block;
+    font-size: 0.8em;
+    width: 50px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    background-color: transparent;
+    text-align: center;
+    padding: 5px;
+    i {
+      cursor: pointer;
+    }
+  }
 `;

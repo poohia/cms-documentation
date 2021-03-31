@@ -45,7 +45,8 @@ export const SortableItemContent = styled.div`
     bottom: 18%;
   }
   i.icon:last-child {
-    float: right;
+    position: absolute;
+    right: 0;
   }
 `;
 export const DragHandleContent = styled(Icon)`

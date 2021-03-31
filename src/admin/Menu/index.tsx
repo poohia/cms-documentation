@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Icon } from "semantic-ui-react";
 import {
@@ -10,36 +10,55 @@ import {
   MenuBtnSignOut,
   MenuFooter,
   MenuBrandTitle,
+  MenuResponsive,
 } from "./styles";
 import useMenu from "./useMenu";
 import Props from "./types";
 import DropdownLanguages from "./components/DropdownLanguages";
 
 const Menu = ({ activeItem }: Props) => {
-  const { driver, icon, title, enableFixtures, signOut, push } = useMenu();
+  const {
+    driver,
+    icon,
+    title,
+    enableFixtures,
+    enableCache,
+    openMenuResponsive,
+    template,
+    signOut,
+    push,
+    setOpenMenuResponsive,
+  } = useMenu();
+  useEffect(() => setOpenMenuResponsive(false), [activeItem]);
   return (
     <>
-      <MenuContent>
+      <MenuContent className={openMenuResponsive ? "active" : ""}>
         <MenuContainer>
           <MenuList>
             <MenuListItem>
-              <Link to="/joazco-admin">
-                <MenuImg src={icon} alt={`Logo of ${title}`} />
-              </Link>
+              {icon && (
+                <Link to="/">
+                  <MenuImg src={icon} alt={`Logo of ${title}`} />
+                </Link>
+              )}
             </MenuListItem>
             <MenuListItem center>
               <MenuBrandTitle>{title}</MenuBrandTitle>
             </MenuListItem>
             <DropdownLanguages />
-            <MenuListItem center>
-              <MenuBtnSignOut
-                onClick={() => signOut().then(() => push("/joazco-connection"))}
-                type="button"
-              >
-                <Icon name="sign-out" />
-                Deconnection
-              </MenuBtnSignOut>
-            </MenuListItem>
+            {driver !== "localstorage" && (
+              <MenuListItem center>
+                <MenuBtnSignOut
+                  onClick={() => {
+                    signOut().then(() => push("/joazco-connection"));
+                  }}
+                  type="button"
+                >
+                  <Icon name="sign-out" />
+                  Deconnection
+                </MenuBtnSignOut>
+              </MenuListItem>
+            )}
             <MenuListItem active={activeItem === "home"}>
               <Link to="/joazco-admin">
                 <Icon name="home" />
@@ -75,6 +94,18 @@ const Menu = ({ activeItem }: Props) => {
           </MenuList>
           <MenuFooter>
             <p>
+              Template:&nbsp;
+              <b>{template}</b>
+            </p>
+            <p>
+              Enable cache:&nbsp;
+              <b>{String(enableCache)}</b>
+            </p>
+            <p>
+              Enable fixutres:&nbsp;
+              <b>{String(enableFixtures)}</b>
+            </p>
+            <p>
               Driver:&nbsp;
               <b>{driver}</b>
             </p>
@@ -88,6 +119,15 @@ const Menu = ({ activeItem }: Props) => {
           </MenuFooter>
         </MenuContainer>
       </MenuContent>
+      <MenuResponsive>
+        <div>
+          <Icon
+            onClick={() => setOpenMenuResponsive(!openMenuResponsive)}
+            size="large"
+            name={!openMenuResponsive ? "bars" : "remove"}
+          />
+        </div>
+      </MenuResponsive>
     </>
   );
 };
