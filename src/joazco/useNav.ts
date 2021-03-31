@@ -160,7 +160,6 @@ const useNav = (liveShare: LiveShare = null) => {
       new Promise((resolve, reject) => {
         setError(undefined);
         setLoading(true);
-        console.log("remove menu", id);
         import(`../drivers/${driver}/useMenus`).then((module) => {
           const {
             removeMenu: removeMenuDriver,
