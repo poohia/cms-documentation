@@ -1,5 +1,6 @@
 import { Grid, Header } from "semantic-ui-react";
 import styled from "styled-components";
+import { ButtonPrimary } from "../../../styled-components";
 import { UserContainer } from "../../../styles";
 
 export const PageContent = styled(UserContainer)`
@@ -36,4 +37,9 @@ export const FooterLinkContent = styled.div`
       float: right;
     }
   }
+`;
+export const ButtonEdit = styled(ButtonPrimary)`
+  position: fixed;
+  bottom: 10%;
+  right: 2%;
 `;

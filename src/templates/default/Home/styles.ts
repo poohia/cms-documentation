@@ -1,6 +1,6 @@
-import { Header, Card } from "semantic-ui-react";
+import { Header } from "semantic-ui-react";
 import styled from "styled-components";
-import { ButtonPrimary } from "../../../styled-components";
+import { ButtonPrimary, Card } from "../../../styled-components";
 import { UserContainer } from "../../../styles";
 
 export const HomeContent = styled(UserContainer)`

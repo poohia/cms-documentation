@@ -38,13 +38,12 @@ export const GlobalStyle = createGlobalStyle<{ theme: Theme }>`
       --background-body: ${({ theme }) => theme.backgroundBody};
       --background-color-menu: ${({ theme }) => theme.backgroundColorMenu};
       --font-size: ${({ theme }) => theme.fontSize};
-      height: 100vh;
-      font-size: var(--font-size);
   }
   body{
     height: 100vh;   
     background-color: ${defaultTheme.backgroundBody};
     color: ${defaultTheme.black};
+    font-size: var(--font-size);
   }
   a{
     color: ${defaultTheme.linkColor};
@@ -52,11 +51,54 @@ export const GlobalStyle = createGlobalStyle<{ theme: Theme }>`
   figure{
     padding-bottom: 0 !important;
   }
+  blockquote{
+    display:block;
+    background-color: #eee;
+    padding: 15px 20px 15px 45px;
+    margin: 0 0 20px;
+    position: relative;
+    line-height: 1.2;
+    font-size: 0.9em;
+    text-align: justify;
+    border-left: 10px solid ${({ theme }) => theme.primary};
+    border-radius: 10px;
+    font-style: italic;
+  }
+  blockquote::before{
+    content: "\\201C"; /*Unicode for Left Double Quote*/
+    font-size: 60px;
+    font-weight: bold;
+    color: #999;
+    
+    /*Positioning*/
+    position: absolute;
+    left: 10px;
+    top:5px;
+  }
+  blockquote::after{
+    /*Reset to make sure*/
+    content: "";
+  }
+  blockquote a{
+    text-decoration: none;
+    background: #eee;
+    cursor: pointer;
+    padding: 0 3px;
+    color: #c76c0c;
+  }
+  blockquote a:hover{
+   color: #666;
+  }
+  blockquote em{
+    font-style: italic;
+  }
   pre {
     display: block;
     unicode-bidi: embed;
     font-family: monospace;
     white-space: pre;
+    max-width: 100%;
+    overflow-y: auto;
   }
   pre::-webkit-scrollbar {
     background-color: #DED7E6;
@@ -112,7 +154,7 @@ export const GlobalStyle = createGlobalStyle<{ theme: Theme }>`
 
   .ui.accordion {
     .title:not(.ui){
-      font-size: 1.3rem;
+      font-size: 1em;
       color: ${defaultTheme.black}; 
       i.icon{
         float: right;
@@ -121,6 +163,7 @@ export const GlobalStyle = createGlobalStyle<{ theme: Theme }>`
     ul{
       list-style: none;
       padding-left: 20px;
+      font-size: 0.8em;
       li{
         margin: 10px 0;
         a{

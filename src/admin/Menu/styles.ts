@@ -37,7 +37,7 @@ export const MenuListItem = styled.li<{ center?: boolean; active?: boolean }>`
   a {
     color: ${({ theme }) => theme.black};
     font-weight: bold;
-    font-size: 0.8rem;
+    font-size: 0.8em;
     i {
       font-size: 1.3rem;
       margin-right: 10%;
@@ -55,6 +55,7 @@ export const MenuBrandTitle = styled.span`
 `;
 export const MenuBtnSignOut = styled.button`
   margin-bottom: 20px;
+  font-size: 0.8em;
   border: none;
   color: ${({ theme }) => theme.danger};
   cursor: pointer;

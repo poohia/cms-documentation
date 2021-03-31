@@ -9,6 +9,7 @@ export const SuspenseContent = styled.div`
   background-color: ${({ theme }) => theme.backgroundBody};
 `;
 export const AdminContainer = styled.div`
+  font-size: 16px;
   height: 100%;
   margin-left: 250px;
   padding: 10px 10px 10px 20px;

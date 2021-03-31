@@ -8,10 +8,11 @@ import {
   PageContentGrid,
   HeaderTextCenter,
   FooterLinkContent,
+  ButtonEdit,
 } from "./styles";
 
 const Page = () => {
-  const { page, previousPage, nextPage } = usePage();
+  const { page, user, previousPage, nextPage } = usePage();
 
   if (!page) {
     return <Loader />;
@@ -90,6 +91,14 @@ const Page = () => {
           </Grid.Column>
         </Grid.Row>
       </PageContentGrid>
+      {user && (
+        <Link to={`/joazco-admin/pages/page/${page.id}`}>
+          <ButtonEdit type="button" icon primary circular>
+            <Icon name="pencil alternate" />
+            &nbsp; Edit
+          </ButtonEdit>
+        </Link>
+      )}
     </PageContent>
   );
 };
