@@ -23,7 +23,7 @@ const NotFound = lazy(() => import(`./templates/${template}/NotFound`));
 function App() {
   const { data: stylesheet } = useStylesheet();
 
-  const { icon, enableFixtures } = useConfig();
+  const { enableFixtures } = useConfig();
   const { locale } = useLanguages();
   const { data: seo } = useSeo();
 
@@ -49,7 +49,7 @@ function App() {
         {description && <meta name="description" content={description} />}
         {keywords && <meta name="keywords" content={keywords} />}
         {favIcon && <link rel="icon" href={favIcon} />}
-        <link rel="icon" href={icon} />
+        {favIcon && <link rel="icon" href={favIcon} />}
         <style>{stylesheet}</style>
       </Helmet>
       <Router>
